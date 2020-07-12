@@ -30,7 +30,7 @@ taskcore ls
 
 Complete a task item:
 ```bash
-taskcore complete 3
+taskcore complete -i 3
 ```
 Filter by date:
 
@@ -40,7 +40,7 @@ taskcore filter -d today
 
 Remove a task item:
 ```bash
-taskcore rm 3
+taskcore rm -i 3
 ```
 
 ### Categories
