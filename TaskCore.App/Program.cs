@@ -1,12 +1,13 @@
-﻿using System;
+﻿using CommandCore.Library;
 
 namespace TaskCore.App
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var commandCoreApp = new CommandCoreApp();
+            return commandCoreApp.Parse(args);
         }
     }
 }
