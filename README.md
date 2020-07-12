@@ -8,7 +8,7 @@ This application works almost on any paltform which includes Linux, MacOS, and W
 
 "Task" simply represents what this application is helping people with. "Core" represents its simplicity and how it works on a terminal environment.
 
-I am developing this application during COVID-19 pandamic, and it is also a sort of a mental escape into a known and controlled world where I know what will happen next. It feels good that way.
+I am developing this application during COVID-19 pandemic, and it is also a sort of a mental escape into a known and controlled world where I know what will happen next. It feels good that way.
 
 ## Why?
 
