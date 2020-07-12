@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "TaskCore.App.AddTask": {
+      "commandName": "Project",
+      "environmentVariables": {
+        
+      },
+      "commandLineArgs": "add -t \"Finish up TaskCore application\" -p 1 -d 01/01/2021 -c Projects"
+    }
+  }
+}
