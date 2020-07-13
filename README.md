@@ -30,7 +30,7 @@ taskcore ls
 
 Complete a task item:
 ```bash
-taskcore complete -i 3
+taskcore c -i 3
 ```
 Filter by date:
 
