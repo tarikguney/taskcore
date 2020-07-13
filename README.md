@@ -48,7 +48,7 @@ taskcore rm -i 3
 Add a new category:
 
 ```bash
-taskcore add-category -n "Work"
+taskcore addc -n "Work"
 ```
 Add a task item to a category:
 
@@ -58,7 +58,7 @@ taskcore add -t "Check if the command works" -d today -c Work
 Remove a category:
 
 ```bash
-taskcore rm-category -n "Work"
+taskcore rmc -n "Work"
 ```
 
 ## CommandCore Framework
