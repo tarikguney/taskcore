@@ -3,5 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
-
+    <ItemGroup>
+        <ProjectReference Include="../TaskCore.Dal.Models/TaskCore.Dal.Models.csproj" />
+    </ItemGroup>
 </Project>
