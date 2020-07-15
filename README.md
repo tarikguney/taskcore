@@ -4,6 +4,9 @@ It is a simple **cross-platform ToDo management application** for those who live
 
 This application works almost on any platform which includes Linux Distros, MacOS, and Windows. It does not require any runtime to be installed on the target machine, and it is only one single executable that can be copied anywhere.
 
+> ### Not Released Yet 
+> This project is still under active development and does not have any release yet. You will see downloadable artifacts under [Releases](https://github.com/tarikguney/taskcore/releases) once they are published.
+
 ### Why did you name it TaskCore?
 
 "Task" simply represents what this application is helping people with. "Core" represents its simplicity and how it works on a terminal environment.
