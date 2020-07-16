@@ -5,7 +5,7 @@ using TaskCore.Dal.Interfaces;
 
 namespace TaskCore.App.Verbs
 {
-    [VerbName("rm")]
+    [VerbName("rm", Description = "Removes a given task.")]
     public class RemoveTask : VerbBase<RemoveTaskOptions>
     {
         private readonly ITodoTaskRepository _todoTaskRepository;

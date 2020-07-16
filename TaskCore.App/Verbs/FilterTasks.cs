@@ -5,7 +5,7 @@ using TaskCore.Dal.Interfaces;
 
 namespace TaskCore.App.Verbs
 {
-    [VerbName("filter")]
+    [VerbName("filter", Description = "Filters tasks.")]
     public class FilterTasks : VerbBase<FilterTasksOptions>
     {
         private readonly ITodoTaskRepository _todoTaskRepository;

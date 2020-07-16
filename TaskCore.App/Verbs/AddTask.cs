@@ -6,7 +6,7 @@ using TaskCore.Dal.Interfaces;
 
 namespace TaskCore.App.Verbs
 {
-    [VerbName("add")]
+    [VerbName("add", Description = "Adds a new task.")]
     public class AddTask : VerbBase<AddTaskOptions>
     {
         private readonly ITodoTaskRepository _todoTaskRepository;

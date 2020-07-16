@@ -5,7 +5,7 @@ using TaskCore.Dal.Interfaces;
 
 namespace TaskCore.App.Verbs
 {
-    [VerbName("c")]
+    [VerbName("c", Description = "Marks a given task as complete.")]
     public class CompleteTask: VerbBase<CompleteTaskOptions>
     {
         private readonly ITodoTaskRepository _todoTaskRepository;

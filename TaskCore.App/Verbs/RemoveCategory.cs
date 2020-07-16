@@ -5,8 +5,8 @@ using TaskCore.Dal.Interfaces;
 
 namespace TaskCore.App.Verbs
 {
-    [VerbName("rmc")]
-    public class RemoveCategory: VerbBase<RemoveCategoryOptions>
+    [VerbName("rmc", Description = "Removes a given task.")]
+    public class RemoveCategory : VerbBase<RemoveCategoryOptions>
     {
         private readonly ICategoryRepository _categoryRepository;
 
@@ -14,6 +14,7 @@ namespace TaskCore.App.Verbs
         {
             _categoryRepository = categoryRepository;
         }
+
         public override VerbViewBase Run()
         {
             throw new System.NotImplementedException();

@@ -5,7 +5,7 @@ using TaskCore.Dal.Interfaces;
 
 namespace TaskCore.App.Verbs
 {
-    [VerbName("list")]
+    [VerbName("list", Description = "Lists all of the tasks.")]
     public class ListTasks : VerbBase<ListTasksOptions>
     {
         private readonly ITodoTaskRepository _todoTaskRepository;

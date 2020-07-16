@@ -3,10 +3,11 @@
   "profiles": {
     "TaskCore.App.AddTask": {
       "commandName": "Project",
-      "environmentVariables": {
-        
-      },
       "commandLineArgs": "add -t \"Finish up TaskCore application\" -p 1 -d 01/01/2021 -c Projects"
+    },
+    "TaskCore.App.GenerateHelp": {
+      "commandName": "Project",
+      "commandLineArgs": "--help"
     }
   }
 }

@@ -5,7 +5,7 @@ using TaskCore.Dal.Interfaces;
 
 namespace TaskCore.App.Verbs
 {
-    [VerbName("addc")]
+    [VerbName("addc", Description = "Adds new category.")]
     public class AddCategory: VerbBase<AddCategoryOptions>
     {
         private readonly ICategoryRepository _categoryRepository;
