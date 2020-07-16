@@ -9,4 +9,10 @@
       <PackageReference Include="CommandCore.Library" Version="1.2.0" />
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="../TaskCore.Dal.FileSystem/TaskCore.Dal.FileSystem.csproj"/>
+        <ProjectReference Include="../TaskCore.Dal.Interfaces/TaskCore.Dal.Interfaces.csproj"/>
+        <ProjectReference Include="../TaskCore.Dal.Models/TaskCore.Dal.Models.csproj"/>
+    </ItemGroup>
+    
 </Project>
