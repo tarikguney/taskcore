@@ -1,8 +1,10 @@
+using System;
 using CommandCore.Library.Attributes;
 using CommandCore.Library.PublicBase;
 using TaskCore.App.Options;
 using TaskCore.App.Views;
 using TaskCore.Dal.Interfaces;
+using TaskCore.Dal.Models;
 
 namespace TaskCore.App.Verbs
 {
@@ -15,9 +17,16 @@ namespace TaskCore.App.Verbs
         {
             _todoTaskRepository = todoTaskRepository;
         }
+
         public override VerbViewBase Run()
         {
-            // TODO Change this with an actual implementation. Testing here for now.
+            _todoTaskRepository.Add(new TodoTask()
+            {
+                Title = Options.Title,
+                DueDateTime = DateTime.Parse(Options.DueDate),
+                CategoryId = Options.Category,
+                Priority = Options.Priority
+            });
             return new AddTaskView(
                 $"Title: {Options.Title}\nPriority: {Options.Priority}\nCategory: {Options.Category}\nDue Date: {Options.DueDate}");
         }
