@@ -12,6 +12,7 @@ namespace TaskCore.App
             commandCoreApp.ConfigureServices(sp =>
             {
                 sp.Register<ITodoTaskRepository, TodoTaskRepository>();
+                sp.Register<IPriorityColorChooser, PriorityColorChooser>();
             });
             return commandCoreApp.Parse(args);
         }

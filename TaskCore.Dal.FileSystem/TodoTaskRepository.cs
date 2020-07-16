@@ -1,23 +1,36 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Xml.Schema;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TaskCore.Dal.Interfaces;
 using TaskCore.Dal.Models;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 
 namespace TaskCore.Dal.FileSystem
 {
-    public class TodoTaskRepository: ITodoTaskRepository
+    public class TodoTaskRepository : ITodoTaskRepository
     {
-        private DirectoryInfo _dir;
+        private FileManager _fileManager;
 
         public TodoTaskRepository()
         {
-            _dir = new TaskPathProvider().GetDir();
+            _fileManager = new FileManager();
         }
-        
+
         public TodoTask Get(string taskId)
         {
-            throw new System.NotImplementedException();
+            var content = _fileManager.ReadTaskFileContent(taskId);
+            return JsonSerializer.Create().Deserialize<TodoTask>(new JsonTextReader(new StringReader(content)));
+        }
+
+        public IReadOnlyList<TodoTask> GetAll()
+        {
+            var allFiles = _fileManager.GetAllTaskFilesContent();
+            return allFiles.Select(a => JsonSerializer.Create().Deserialize<TodoTask>(new JsonTextReader(new StringReader(a))))
+                .ToList();
         }
 
         public IReadOnlyList<TodoTask> GetByCategory(string categoryId)
@@ -30,12 +43,13 @@ namespace TaskCore.Dal.FileSystem
             var jTask = JObject.FromObject(task);
             var fileName = jTask.GetHashCode().ToString();
             jTask["Id"] = fileName;
-            File.WriteAllText(Path.Combine(_dir.FullName, fileName), jTask.ToString());
+            _fileManager.SaveTaskFile(fileName, jTask.ToString());
         }
 
         public bool Delete(string taskId)
         {
-            throw new System.NotImplementedException();
+            //var content = _fileManager.ReadTaskFileContent(taskId);
+            return true;
         }
     }
 }

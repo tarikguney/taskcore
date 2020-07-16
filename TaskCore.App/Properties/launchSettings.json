@@ -5,9 +5,17 @@
       "commandName": "Project",
       "commandLineArgs": "add -t \"Finish up TaskCore application\" -p 1 -d 01/01/2021 -c Projects"
     },
+    "TaskCore.App.AddCompletedTask": {
+      "commandName": "Project",
+      "commandLineArgs": "add -t \"Write your poem\" -p 1 -d 01/01/2021 -c Projects -cm"
+    },
     "TaskCore.App.GenerateHelp": {
       "commandName": "Project",
       "commandLineArgs": "--help"
+    },
+    "TaskCore.App.ListTasks": {
+      "commandName": "Project",
+      "commandLineArgs": "ls"
     }
   }
 }

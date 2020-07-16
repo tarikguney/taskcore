@@ -12,6 +12,7 @@ namespace TaskCore.Dal.Interfaces
         void Add(TodoTask task);
 
         bool Delete(string taskId);
-        
+
+        IReadOnlyList<TodoTask> GetAll();
     }
 }

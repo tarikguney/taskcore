@@ -25,8 +25,10 @@ namespace TaskCore.App.Verbs
                 Title = Options.Title,
                 DueDateTime = DateTime.Parse(Options.DueDate),
                 CategoryId = Options.Category,
-                Priority = Options.Priority
+                Priority = Options.Priority,
+                Completed = Options.Completed
             });
+            
             return new AddTaskView(
                 $"Title: {Options.Title}\nPriority: {Options.Priority}\nCategory: {Options.Category}\nDue Date: {Options.DueDate}");
         }

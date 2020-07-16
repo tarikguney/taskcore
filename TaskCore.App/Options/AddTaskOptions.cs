@@ -16,5 +16,8 @@ namespace TaskCore.App.Options
 
         [OptionName("category", Alias = "c")]
         public string Category { get; set; }
+        
+        [OptionName("completed", Alias = "cm")]
+        public bool Completed { get; set; }
     }
 }
