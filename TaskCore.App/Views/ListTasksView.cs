@@ -19,18 +19,27 @@ namespace TaskCore.App.Views
 
         public override void RenderResponse()
         {
-            for(var i = 0;i < _tasks.Count; i++)
+            for (var i = 0; i < _tasks.Count; i++)
             {
                 var task = _tasks[i];
-                ForegroundColor = _priorityColorChooser.GetColor(task.Priority);
+                var usePriorityColor = task.Priority > 0 && task.Priority < 4;
+                if (usePriorityColor)
+                {
+                    ForegroundColor = _priorityColorChooser.GetColor(task.Priority);
+                }
+
                 var completed = task.Completed ? "X" : " ";
                 Write($"[{completed}]");
                 ResetColor();
                 Write(" ");
-                // TODO show the order number as the ID instead of the actual ID.
                 Write($"{i}. \"{task.Title}\"");
                 Write(" ");
-                ForegroundColor = _priorityColorChooser.GetColor(task.Priority);
+                
+                if (usePriorityColor)
+                {
+                    ForegroundColor = _priorityColorChooser.GetColor(task.Priority);
+                }
+
                 Write($"P{task.Priority}");
                 ResetColor();
                 Write(" ");

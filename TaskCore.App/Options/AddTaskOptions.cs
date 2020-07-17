@@ -12,11 +12,11 @@ namespace TaskCore.App.Options
         public string DueDate { get; set; }
 
         [OptionName("priority", Alias = "p")]
-        public int Priority { get; set; }
+        public int Priority { get; set; } = 4;
 
         [OptionName("category", Alias = "c")]
-        public string Category { get; set; }
-        
+        public string Category { get; set; } = "Inbox";
+
         [OptionName("completed", Alias = "cm")]
         public bool Completed { get; set; }
     }

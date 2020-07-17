@@ -18,6 +18,7 @@ namespace TaskCore.App.Views
         {
             ForegroundColor = ConsoleColor.Green;
             WriteLine($"Added the task \"{_options.Title}\"");
+            ResetColor();
         }
     }
 }
