@@ -1,8 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
-using System.Xml.Schema;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TaskCore.Dal.Interfaces;
@@ -13,7 +12,7 @@ namespace TaskCore.Dal.FileSystem
 {
     public class TodoTaskRepository : ITodoTaskRepository
     {
-        private FileManager _fileManager;
+        private readonly FileManager _fileManager;
 
         public TodoTaskRepository()
         {
@@ -29,7 +28,10 @@ namespace TaskCore.Dal.FileSystem
         public IReadOnlyList<TodoTask> GetAll()
         {
             var allFiles = _fileManager.GetAllTaskFilesContent();
-            return allFiles.Select(a => JsonSerializer.Create().Deserialize<TodoTask>(new JsonTextReader(new StringReader(a))))
+            return allFiles
+                .Select(a => JsonSerializer.Create()
+                    .Deserialize<TodoTask>(new JsonTextReader(new StringReader(a))))
+                .OrderBy(a => a.Id)
                 .ToList();
         }
 
@@ -41,8 +43,9 @@ namespace TaskCore.Dal.FileSystem
         public void Add(TodoTask task)
         {
             var jTask = JObject.FromObject(task);
-            var fileName = jTask.GetHashCode().ToString();
-            jTask["Id"] = fileName;
+            var timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+            var fileName = timestamp.ToString();
+            jTask["Id"] = timestamp;
             _fileManager.SaveTaskFile(fileName, jTask.ToString());
         }
 

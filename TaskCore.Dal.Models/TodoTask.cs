@@ -4,7 +4,7 @@ namespace TaskCore.Dal.Models
 {
     public class TodoTask
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public DateTime DueDateTime { get; set; }
         public int Priority { get; set; }

@@ -7,7 +7,7 @@
     },
     "TaskCore.App.AddCompletedTask": {
       "commandName": "Project",
-      "commandLineArgs": "add -t \"Write your poem\" -p 1 -d 01/01/2021 -c Projects -cm"
+      "commandLineArgs": "add -t \"Write your poem\" -p 2 -d 01/01/2021 -c Projects -cm"
     },
     "TaskCore.App.GenerateHelp": {
       "commandName": "Project",
