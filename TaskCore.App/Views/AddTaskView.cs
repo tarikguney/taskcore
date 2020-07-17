@@ -1,6 +1,7 @@
 using System;
 using CommandCore.Library.PublicBase;
 using TaskCore.App.Options;
+using static System.Console;
 
 namespace TaskCore.App.Views
 {
@@ -15,8 +16,8 @@ namespace TaskCore.App.Views
         
         public override void RenderResponse()
         {
-            // TODO Need to display a better message here.
-            Console.WriteLine("Task has been added!");
+            ForegroundColor = ConsoleColor.Green;
+            WriteLine($"Added the task \"{_options.Title}\"");
         }
     }
 }
