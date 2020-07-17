@@ -5,7 +5,7 @@ namespace TaskCore.Dal.Interfaces
 {
     public interface ITodoTaskRepository
     {
-        TodoTask Get(string taskId);
+        TodoTask Get(long taskId);
 
         IReadOnlyList<TodoTask> GetByCategory(string categoryId);
 
@@ -14,5 +14,7 @@ namespace TaskCore.Dal.Interfaces
         bool Delete(string taskId);
 
         IReadOnlyList<TodoTask> GetAll();
+        IReadOnlyList<long> GetAllTaskIdsSortedByTaskIdDesc();
+        void Update(TodoTask task);
     }
 }

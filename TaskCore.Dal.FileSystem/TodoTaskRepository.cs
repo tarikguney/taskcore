@@ -19,9 +19,9 @@ namespace TaskCore.Dal.FileSystem
             _fileManager = new FileManager();
         }
 
-        public TodoTask Get(string taskId)
+        public TodoTask Get(long taskId)
         {
-            var content = _fileManager.ReadTaskFileContent(taskId);
+            var content = _fileManager.ReadTaskFileContent(taskId.ToString());
             return JsonSerializer.Create().Deserialize<TodoTask>(new JsonTextReader(new StringReader(content)));
         }
 
@@ -31,8 +31,20 @@ namespace TaskCore.Dal.FileSystem
             return allFiles
                 .Select(a => JsonSerializer.Create()
                     .Deserialize<TodoTask>(new JsonTextReader(new StringReader(a))))
-                .OrderBy(a => a.Id)
+                .OrderByDescending(a => a.Id)
                 .ToList();
+        }
+
+        public IReadOnlyList<long> GetAllTaskIdsSortedByTaskIdDesc()
+        {
+            var taskIds = _fileManager.GetAllFileNames();
+            return taskIds.OrderByDescending(a => a).ToList();
+        }
+
+        public void Update(TodoTask task)
+        {
+            _fileManager.SaveTaskFile(task.Id.ToString(), 
+                JObject.FromObject(task).ToString());
         }
 
         public IReadOnlyList<TodoTask> GetByCategory(string categoryId)

@@ -5,8 +5,8 @@ namespace TaskCore.App.Options
 {
     public class AddCategoryOptions : VerbOptionsBase
     {
-        [OptionName("name", Alias="n")]
-        public string Name { get; set; }
+        [OptionName("title", Alias="t")]
+        public string Title { get; set; }
         
         [OptionName("color", Alias = "c")]
         public string Color { get; set; }
