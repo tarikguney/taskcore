@@ -1,20 +1,22 @@
 using System;
 using CommandCore.Library.PublicBase;
+using TaskCore.App.Options;
 
 namespace TaskCore.App.Views
 {
     public class AddTaskView: VerbViewBase
     {
-        private readonly string _message;
+        private readonly AddTaskOptions _options;
 
-        public AddTaskView(string message)
+        public AddTaskView(AddTaskOptions options)
         {
-            _message = message;
+            _options = options;
         }
         
         public override void RenderResponse()
         {
-            Console.WriteLine(_message);
+            // TODO Need to display a better message here.
+            Console.WriteLine("Task has been added!");
         }
     }
 }

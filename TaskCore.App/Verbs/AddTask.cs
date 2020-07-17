@@ -23,14 +23,13 @@ namespace TaskCore.App.Verbs
             _todoTaskRepository.Add(new TodoTask()
             {
                 Title = Options.Title,
-                DueDateTime = DateTime.Parse(Options.DueDate),
+                DueDateTime = Options.DueDate == null ? DateTime.Parse(Options.DueDate) : (DateTime?) null,
                 CategoryId = Options.Category,
                 Priority = Options.Priority,
                 Completed = Options.Completed
             });
             
-            return new AddTaskView(
-                $"Title: {Options.Title}\nPriority: {Options.Priority}\nCategory: {Options.Category}\nDue Date: {Options.DueDate}");
+            return new AddTaskView(Options);
         }
     }
 }
