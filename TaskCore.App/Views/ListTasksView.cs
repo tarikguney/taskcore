@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using CommandCore.Library.PublicBase;
 using TaskCore.Dal.Models;
 using static System.Console;
