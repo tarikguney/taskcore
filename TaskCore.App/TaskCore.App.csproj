@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CommandCore.Library" Version="1.2.3-beta1" />
+      <PackageReference Include="CommandCore.Library" Version="1.2.3" />
     </ItemGroup>
 
     <ItemGroup>
