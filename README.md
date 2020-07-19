@@ -68,6 +68,29 @@ taskcore rmc -n "Work"
 
 This application is using another project I developed named "CommandCore" as its underlying framework for command parsing and project layout management. CommandCore is an opinionated MVC-based framework for command line application development. You can find more information at [CommandCore Github Page](https://www.github.com/tarikguney/command-core).
 
+## Want to build locally?
+
+## Want to build locally?
+
+Run the folowing command for the desired operating system. The final executable will be self-contained and single executable file. You don't need to have .NET Core runtime in the target computer where you are planning to run the published binary.
+
+#### Linux
+```
+dotnet publish -c Release --self-contained true --runtime linux-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true .\TaskCore.App.csproj
+```
+
+#### Windows 10
+```
+dotnet publish -c Release --self-contained true --runtime win10-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true .\TaskCore.App.csproj
+```
+
+#### MacOS
+```
+dotnet publish -c Release --self-contained true --runtime osx-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true .\TaskCore.App.csproj
+```
+
+Then, go to `in/Release/netcoreapp3.1/osx-x64/publish` to locate outputted executable named `taskcore` and run the `taskcore` using the subcommands above.
+
 ## Developed by
 
 Tarik Guney
