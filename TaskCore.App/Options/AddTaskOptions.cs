@@ -5,7 +5,8 @@ namespace TaskCore.App.Options
 {
     public class AddTaskOptions : VerbOptionsBase
     {
-        [OptionName("title", Alias = "t")]
+        [OptionName("title", Alias = "t", Description = "Title of the task.")]
+        [OptionName("name", Alias = "n", Description = "Name of the task.")]
         public string Title { get; set; }
 
         [OptionName("duedate", Alias = "d")]
