@@ -4,7 +4,7 @@ namespace TaskCore.Dal.Interfaces
 {
     public interface ICategoryRepository
     {
-        Category GetById(string categoryId);
+        Category GetByName(string categoryName);
 
         /// <summary>
         /// Creates a new category and returns a category object with Id. 
@@ -14,6 +14,6 @@ namespace TaskCore.Dal.Interfaces
         /// <summary>
         /// Deletes a category and returns true if the deletion was a success.
         /// </summary>
-        bool Delete(string categoryId);
+        bool DeleteByName(string categoryName);
     }
 }

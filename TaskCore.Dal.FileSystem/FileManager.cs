@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.XPath;
+using TaskCore.Dal.Models;
 
 namespace TaskCore.Dal.FileSystem
 {
@@ -19,7 +21,7 @@ namespace TaskCore.Dal.FileSystem
                 Directory.CreateDirectory("./db/completed");
                 Directory.CreateDirectory("./db/categories");
             }
-            
+
             _activeTasksDir = new DirectoryInfo("./db/active");
             _completedTasksDir = new DirectoryInfo("./db/completed");
             _categoriesDir = new DirectoryInfo("./db/categories");
@@ -57,6 +59,26 @@ namespace TaskCore.Dal.FileSystem
         {
             var allTaskFiles = _completedTasksDir.GetFiles();
             return allTaskFiles.Select(a => File.ReadAllText(a.FullName)).ToList();
+        }
+
+        public void SaveCategory(string fileName, string content)
+        {
+            File.WriteAllText(Path.Combine(_categoriesDir.FullName, fileName), content);
+        }
+
+        public void DeleteCategory(string fileName)
+        {
+            var fileAbsolutePath = Path.Combine(_categoriesDir.FullName, fileName);
+            if (File.Exists(fileAbsolutePath))
+            {
+                File.Delete(fileAbsolutePath);
+            }
+        }
+
+        public string? GetCategory(string fileName)
+        {
+            var fileAbsolutePath = Path.Combine(_categoriesDir.FullName, fileName);
+            return File.Exists(fileAbsolutePath) ? File.ReadAllText(fileAbsolutePath) : null;
         }
     }
 }

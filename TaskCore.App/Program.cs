@@ -13,6 +13,7 @@ namespace TaskCore.App
             {
                 sp.Register<ITodoTaskRepository, TodoTaskRepository>();
                 sp.Register<IPriorityColorChooser, PriorityColorChooser>();
+                sp.Register<ICategoryRepository, CategoryRepository>();
             });
             return commandCoreApp.Parse(args);
         }

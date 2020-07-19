@@ -7,8 +7,5 @@ namespace TaskCore.App.Options
     {
         [OptionName("title", Alias="t")]
         public string Title { get; set; }
-        
-        [OptionName("color", Alias = "c")]
-        public string Color { get; set; }
     }
 }
