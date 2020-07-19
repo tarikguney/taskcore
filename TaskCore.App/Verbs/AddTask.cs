@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using CommandCore.Library.Attributes;
 using CommandCore.Library.PublicBase;
 using TaskCore.App.Options;
@@ -25,12 +26,13 @@ namespace TaskCore.App.Verbs
             {
                 Title = Options.Title,
                 DueDateTime = Options.DueDate != null
-                    ? DateTime.Parse(Options.DueDate)
-                    : (DateTime?) null,
+                    ? DateTimeOffset.Parse(Options.DueDate, CultureInfo.CurrentCulture)
+                    : (DateTimeOffset?) null,
                 //TODO check if the category exists first, otherwise show a message. The category must be case-insensitive
                 CategoryId = Options.Category,
                 Priority = Options.Priority,
-                Completed = Options.Completed
+                Completed = Options.Completed,
+                CreationDate = DateTimeOffset.Now
             });
 
             return new AddTaskView(Options);

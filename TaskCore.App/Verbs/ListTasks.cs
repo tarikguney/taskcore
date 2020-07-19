@@ -27,7 +27,7 @@ namespace TaskCore.App.Verbs
                 ? _todoTaskRepository.GetCompletedTasksOrderedByAddedDate()
                 : new List<TodoTask>();
 
-            return new ListTasksView(activeTasks, completedTasks, _priorityColorChooser);
+            return new ListTasksView(Options, activeTasks, completedTasks, _priorityColorChooser);
         }
     }
 }

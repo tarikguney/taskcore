@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -56,6 +57,7 @@ namespace TaskCore.Dal.FileSystem
         public void MarkComplete(TodoTask task)
         {
             task.Completed = true;
+            task.CompletionDate = DateTimeOffset.Now;
             _fileManager.DeleteActiveTask(task.Id.ToString());
             _fileManager.SaveCompletedTask(task.Id.ToString(), JObject.FromObject(task).ToString());
         }

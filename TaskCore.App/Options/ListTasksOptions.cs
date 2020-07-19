@@ -7,5 +7,8 @@ namespace TaskCore.App.Options
     {
         [OptionName("showcompleted", Alias = "c")]
         public bool ShowCompletedTasks { get; set; }
+        
+        [OptionName("verbose",Alias = "v")]
+        public bool Verbose { get; set; }
     }
 }

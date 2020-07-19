@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CommandCore.Library.PublicBase;
+using TaskCore.App.Options;
 using TaskCore.Dal.Models;
 using static System.Console;
 
@@ -8,13 +9,15 @@ namespace TaskCore.App.Views
 {
     public class ListTasksView : VerbViewBase
     {
+        private readonly ListTasksOptions _options;
         private readonly IReadOnlyList<TodoTask> _activeTasks;
         private readonly IReadOnlyList<TodoTask> _completedTasks;
         private readonly IPriorityColorChooser _priorityColorChooser;
 
-        public ListTasksView(IReadOnlyList<TodoTask> activeTasks, IReadOnlyList<TodoTask> completedTasks,
+        public ListTasksView(ListTasksOptions options, IReadOnlyList<TodoTask> activeTasks, IReadOnlyList<TodoTask> completedTasks,
             IPriorityColorChooser priorityColorChooser)
         {
+            _options = options;
             _activeTasks = activeTasks;
             _completedTasks = completedTasks;
             _priorityColorChooser = priorityColorChooser;
@@ -40,11 +43,15 @@ namespace TaskCore.App.Views
 
         private void RenderCompletedTasks()
         {
-            // TODO need to capture display the completion and creation dates.
             // TODO Use CategoryId to get the actual category title and show it instead.
             foreach (var task in _completedTasks)
             {
-                WriteLine($"- [X] \"{task.Title}\" {task.Priority} in {task.CategoryId}");
+                Write($"- [X] \"{task.Title}\" {task.Priority} in {task.CategoryId}");
+                if (_options.Verbose)
+                {
+                    Write($" - Created at {task.CreationDate:F}, completed at {task.CompletionDate:F}");
+                }
+                WriteLine();
             }
         }
 
@@ -76,7 +83,12 @@ namespace TaskCore.App.Views
                 ResetColor();
                 Write(" ");
                 // TODO Outputting the CategoryId is not correct. Use Category Title instead.
-                WriteLine($"in {task.CategoryId}");
+                Write($"in {task.CategoryId}");
+                if (_options.Verbose)
+                {
+                    Write($" - {task.CreationDate:F}.");
+                }
+                WriteLine();
             }
         }
     }
