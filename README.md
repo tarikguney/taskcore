@@ -74,8 +74,6 @@ This application is using another project I developed named "CommandCore" as its
 
 ## Want to build locally?
 
-## Want to build locally?
-
 Run the folowing command for the desired operating system. The final executable will be self-contained and single executable file. You don't need to have .NET Core runtime in the target computer where you are planning to run the published binary.
 
 #### Linux
