@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CommandCore.Library.PublicBase;
+using TaskCore.App.Options;
 using TaskCore.Dal.Models;
 using static System.Console;
 
@@ -8,9 +9,10 @@ namespace TaskCore.App.Views
     public class ListTasksView : VerbViewBase
     {
         private readonly IReadOnlyList<TodoTask> _tasks;
+        private readonly ListTasksOptions _options;
         private readonly IPriorityColorChooser _priorityColorChooser;
 
-        public ListTasksView(IReadOnlyList<TodoTask> tasks, IPriorityColorChooser priorityColorChooser)
+        public ListTasksView(IReadOnlyList<TodoTask> tasks,IPriorityColorChooser priorityColorChooser)
         {
             _tasks = tasks;
             _priorityColorChooser = priorityColorChooser;

@@ -19,7 +19,7 @@ namespace TaskCore.App.Verbs
         {
             // TODO By decreasing the number of query calls, the performance can be improved here, but heck yeah for now.
             // I will consider performance tuning in the next iteration.
-            var tasks = _todoTaskRepository.GetAllTaskIdsSortedByTaskIdDesc();
+            var tasks = _todoTaskRepository.GetTasksSortedByIdDesc();
             var completedTaskId = tasks[Options.TaskId];
             var task = _todoTaskRepository.Get(completedTaskId);
             task.Completed = true;

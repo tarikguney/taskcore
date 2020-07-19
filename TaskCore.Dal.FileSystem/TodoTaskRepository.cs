@@ -25,8 +25,12 @@ namespace TaskCore.Dal.FileSystem
             return JsonSerializer.Create().Deserialize<TodoTask>(new JsonTextReader(new StringReader(content)));
         }
 
-        public IReadOnlyList<TodoTask> GetAll()
+        public IReadOnlyList<TodoTask> GetAll(bool includeCompletedTasks = false)
         {
+            var fileNames = GetTasksSortedByIdDesc(includeCompletedTasks);
+            // TODO each file needs to know if it comes from completed or active folders.
+            //fileNames.Select(a=> _fileManager.)
+            
             var allFiles = _fileManager.GetAllTaskFilesContent();
             return allFiles
                 .Select(a => JsonSerializer.Create()
@@ -35,30 +39,36 @@ namespace TaskCore.Dal.FileSystem
                 .ToList();
         }
 
-        public IReadOnlyList<long> GetAllTaskIdsSortedByTaskIdDesc()
+        public IReadOnlyList<long> GetTasksSortedByIdDesc(bool includeCompletedTasks = false)
         {
-            var taskIds = _fileManager.GetAllFileNames();
-            return taskIds.OrderByDescending(a => a).ToList();
+            var activeTaskIds = _fileManager.GetAllActiveTasksFileNames()
+                .OrderByDescending(a => a).ToList();
+            if (includeCompletedTasks)
+            {
+                var completedTaskIds = _fileManager.GetAllCompletedTaskFileNames()
+                    .OrderByDescending(a => a).ToList();
+                activeTaskIds.Concat(completedTaskIds);
+            }
+
+            return activeTaskIds;
         }
 
         public void Update(TodoTask task)
         {
-            _fileManager.SaveTaskFile(task.Id.ToString(), 
-                JObject.FromObject(task).ToString());
+            _fileManager.SaveTaskFile(task.Id.ToString(), JObject.FromObject(task).ToString());
         }
 
         public IReadOnlyList<TodoTask> GetByCategory(string categoryId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Add(TodoTask task)
         {
             var jTask = JObject.FromObject(task);
             var timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
-            var fileName = timestamp.ToString();
             jTask["Id"] = timestamp;
-            _fileManager.SaveTaskFile(fileName, jTask.ToString());
+            _fileManager.SaveTaskFile(timestamp.ToString(), jTask.ToString());
         }
 
         public bool Delete(string taskId)

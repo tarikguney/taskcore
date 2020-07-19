@@ -20,8 +20,8 @@ namespace TaskCore.App.Verbs
 
         public override VerbViewBase Run()
         {
-            var allTasks = _todoTaskRepository.GetAll();
-            return new ListTasksView(allTasks, _priorityColorChooser);
+            var allTasks = _todoTaskRepository.GetAll(TODO)
+            return new ListTasksView(allTasks, Options, _priorityColorChooser);
         }
     }
 }

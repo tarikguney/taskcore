@@ -13,8 +13,10 @@ namespace TaskCore.Dal.Interfaces
 
         bool Delete(string taskId);
 
-        IReadOnlyList<TodoTask> GetAll();
-        IReadOnlyList<long> GetAllTaskIdsSortedByTaskIdDesc();
+        IReadOnlyList<TodoTask> GetAll(bool includeCompletedTasks);
+        
+        IReadOnlyList<long> GetTasksSortedByIdDesc(bool includeCompletedTasks = false);
+        
         void Update(TodoTask task);
     }
 }
