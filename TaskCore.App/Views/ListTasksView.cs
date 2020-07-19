@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CommandCore.Library.PublicBase;
 using TaskCore.Dal.Models;
@@ -21,11 +22,17 @@ namespace TaskCore.App.Views
 
         public override void RenderResponse()
         {
+            ForegroundColor = ConsoleColor.Blue;
+            WriteLine("[ ] ACTIVE TASKS:");
+            ResetColor();
+            WriteLine("-----------------");
             RenderActiveTasks();
             if (_completedTasks.Count > 0)
             {
                 WriteLine();
-                WriteLine("COMPLETED TASKS:");
+                ForegroundColor = ConsoleColor.Green;
+                WriteLine("[✓] COMPLETED TASKS:");
+                ResetColor();
                 WriteLine("-----------------");
                 RenderCompletedTasks();
             }
