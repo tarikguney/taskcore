@@ -19,43 +19,45 @@ namespace TaskCore.Dal.FileSystem
             _fileManager = new FileManager();
         }
 
-        public TodoTask Get(long taskId)
+        public IReadOnlyList<TodoTask> GetActiveTasksOrderedByAddedDate(bool includeCompletedTasks = false)
         {
-            var content = _fileManager.ReadTaskFileContent(taskId.ToString());
-            return JsonSerializer.Create().Deserialize<TodoTask>(new JsonTextReader(new StringReader(content)));
-        }
-
-        public IReadOnlyList<TodoTask> GetAll(bool includeCompletedTasks = false)
-        {
-            var fileNames = GetTasksSortedByIdDesc(includeCompletedTasks);
-            // TODO each file needs to know if it comes from completed or active folders.
-            //fileNames.Select(a=> _fileManager.)
-            
-            var allFiles = _fileManager.GetAllTaskFilesContent();
-            return allFiles
+            var activeTasks = _fileManager.GetActiveTasksContents();
+            return activeTasks
                 .Select(a => JsonSerializer.Create()
                     .Deserialize<TodoTask>(new JsonTextReader(new StringReader(a))))
                 .OrderByDescending(a => a.Id)
                 .ToList();
         }
 
-        public IReadOnlyList<long> GetTasksSortedByIdDesc(bool includeCompletedTasks = false)
+        public IReadOnlyList<TodoTask> GetCompletedTasksOrderedByAddedDate(bool includeCompletedTasks = false)
         {
-            var activeTaskIds = _fileManager.GetAllActiveTasksFileNames()
-                .OrderByDescending(a => a).ToList();
-            if (includeCompletedTasks)
-            {
-                var completedTaskIds = _fileManager.GetAllCompletedTaskFileNames()
-                    .OrderByDescending(a => a).ToList();
-                activeTaskIds.Concat(completedTaskIds);
-            }
-
-            return activeTaskIds;
+            var activeTasks = _fileManager.GetCompletedTasksContents();
+            return activeTasks
+                .Select(a => JsonSerializer.Create()
+                    .Deserialize<TodoTask>(new JsonTextReader(new StringReader(a))))
+                .OrderByDescending(a => a.Id)
+                .ToList();
         }
 
         public void Update(TodoTask task)
         {
-            _fileManager.SaveTaskFile(task.Id.ToString(), JObject.FromObject(task).ToString());
+            if (task.Completed)
+            {
+                _fileManager.SaveCompletedTask(task.Id.ToString(),
+                    JObject.FromObject(task).ToString());
+            }
+            else
+            {
+                _fileManager.SaveActiveTask(task.Id.ToString(),
+                    JObject.FromObject(task).ToString());
+            }
+        }
+
+        public void MarkComplete(TodoTask task)
+        {
+            task.Completed = true;
+            _fileManager.DeleteActiveTask(task.Id.ToString());
+            _fileManager.SaveCompletedTask(task.Id.ToString(), JObject.FromObject(task).ToString());
         }
 
         public IReadOnlyList<TodoTask> GetByCategory(string categoryId)
@@ -68,13 +70,19 @@ namespace TaskCore.Dal.FileSystem
             var jTask = JObject.FromObject(task);
             var timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
             jTask["Id"] = timestamp;
-            _fileManager.SaveTaskFile(timestamp.ToString(), jTask.ToString());
+            _fileManager.SaveActiveTask(timestamp.ToString(), jTask.ToString());
         }
 
-        public bool Delete(string taskId)
+        public void Delete(TodoTask task)
         {
-            //var content = _fileManager.ReadTaskFileContent(taskId);
-            return true;
+            if (task.Completed)
+            {
+                _fileManager.DeleteCompletedTask(task.Id.ToString());
+            }
+            else
+            {
+                _fileManager.DeleteActiveTask(task.Id.ToString());
+            }
         }
     }
 }

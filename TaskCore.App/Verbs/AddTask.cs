@@ -20,12 +20,14 @@ namespace TaskCore.App.Verbs
 
         public override VerbViewBase Run()
         {
+            // TODO Perform some input validation here, for required fields, etc.
             _todoTaskRepository.Add(new TodoTask()
             {
                 Title = Options.Title,
                 DueDateTime = Options.DueDate != null
                     ? DateTime.Parse(Options.DueDate)
                     : (DateTime?) null,
+                //TODO check if the category exists first, otherwise show a message. The category must be case-insensitive
                 CategoryId = Options.Category,
                 Priority = Options.Priority,
                 Completed = Options.Completed

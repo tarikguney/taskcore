@@ -16,6 +16,10 @@
     "TaskCore.App.ListTasks": {
       "commandName": "Project",
       "commandLineArgs": "ls"
+    },
+    "TaskCore.App.ListWithCompleted": {
+      "commandName": "Project",
+      "commandLineArgs": "ls -c"
     }
   }
 }

@@ -12,61 +12,51 @@ namespace TaskCore.Dal.FileSystem
 
         public FileManager()
         {
-            if (!Directory.Exists("./db/active"))
+            if (!Directory.Exists("./db"))
             {
+                Directory.CreateDirectory("./db");
                 Directory.CreateDirectory("./db/active");
-            }
-
-            _activeTasksDir = new DirectoryInfo("./tasks/active");
-
-            if (!Directory.Exists("./db/completed"))
-            {
                 Directory.CreateDirectory("./db/completed");
+                Directory.CreateDirectory("./db/categories");
             }
-
-            _completedTasksDir = new DirectoryInfo("./tasks/completed");
-
-            if (!Directory.Exists("./db/categories"))
-            {
-                Directory.CreateDirectory("./tasks/categories");
-            }
-
-            _categoriesDir = new DirectoryInfo("./tasks/categories");
+            
+            _activeTasksDir = new DirectoryInfo("./db/active");
+            _completedTasksDir = new DirectoryInfo("./db/completed");
+            _categoriesDir = new DirectoryInfo("./db/categories");
         }
 
-        public void SaveTaskFile(string fileName, string content)
+        public void SaveActiveTask(string fileName, string content)
         {
             File.WriteAllText(Path.Combine(_activeTasksDir.FullName, fileName),
                 content);
         }
 
-        public string ReadTaskFileContent(string taskId)
+        public void SaveCompletedTask(string fileName, string content)
         {
-            return File.ReadAllText(Path.Combine(_activeTasksDir.FullName, taskId));
+            File.WriteAllText(Path.Combine(_completedTasksDir.FullName, fileName),
+                content);
         }
 
-        public List<string> GetAllTaskFilesContent()
+        public void DeleteActiveTask(string fileName)
+        {
+            File.Delete(Path.Combine(_activeTasksDir.FullName, fileName));
+        }
+
+        public void DeleteCompletedTask(string fileName)
+        {
+            File.Delete(Path.Combine(_completedTasksDir.FullName, fileName));
+        }
+
+        public List<string> GetActiveTasksContents()
         {
             var allTaskFiles = _activeTasksDir.GetFiles();
             return allTaskFiles.Select(a => File.ReadAllText(a.FullName)).ToList();
         }
 
-        public List<long> GetAllActiveTasksFileNames()
+        public List<string> GetCompletedTasksContents()
         {
-            return _activeTasksDir.GetFiles()
-                .Select(a => long.Parse(a.Name)).ToList();
-        }
-
-        public List<long> GetAllCompletedTaskFileNames()
-        {
-            return _completedTasksDir.GetFiles()
-                .Select(a => long.Parse(a.Name)).ToList();
-        }
-
-        public List<string> GetAllCategoryFileNames()
-        {
-            return _categoriesDir.GetFiles()
-                .Select(a => a.Name).ToList();
+            var allTaskFiles = _completedTasksDir.GetFiles();
+            return allTaskFiles.Select(a => File.ReadAllText(a.FullName)).ToList();
         }
     }
 }

@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using CommandCore.Library.Attributes;
 using CommandCore.Library.PublicBase;
 using TaskCore.App.Options;
 using TaskCore.App.Views;
 using TaskCore.Dal.Interfaces;
+using TaskCore.Dal.Models;
 
 namespace TaskCore.App.Verbs
 {
@@ -20,8 +22,12 @@ namespace TaskCore.App.Verbs
 
         public override VerbViewBase Run()
         {
-            var allTasks = _todoTaskRepository.GetAll(TODO)
-            return new ListTasksView(allTasks, Options, _priorityColorChooser);
+            var activeTasks = _todoTaskRepository.GetActiveTasksOrderedByAddedDate();
+            var completedTasks = Options.ShowCompletedTasks
+                ? _todoTaskRepository.GetCompletedTasksOrderedByAddedDate()
+                : new List<TodoTask>();
+
+            return new ListTasksView(activeTasks, completedTasks, _priorityColorChooser);
         }
     }
 }

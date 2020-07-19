@@ -19,12 +19,10 @@ namespace TaskCore.App.Verbs
         {
             // TODO By decreasing the number of query calls, the performance can be improved here, but heck yeah for now.
             // I will consider performance tuning in the next iteration.
-            var tasks = _todoTaskRepository.GetTasksSortedByIdDesc();
-            var completedTaskId = tasks[Options.TaskId];
-            var task = _todoTaskRepository.Get(completedTaskId);
-            task.Completed = true;
-            _todoTaskRepository.Update(task);
-            return new CompleteTaskView(task);
+            var tasks = _todoTaskRepository.GetActiveTasksOrderedByAddedDate();
+            var activeTask = tasks[Options.TaskId];
+            _todoTaskRepository.MarkComplete(activeTask);
+            return new CompleteTaskView(activeTask);
         }
     }
 }
