@@ -33,6 +33,8 @@ namespace TaskCore.Dal.FileSystem
 
         public bool DeleteByName(string categoryName)
         {
+            // TODO removing a category should mean something other than simply deleting the category name.
+            // Perhaps it means to delete all of the active tasks under the category.
             _fileManager.DeleteCategory(GenerateCategoryId(categoryName));
             return true;
         }

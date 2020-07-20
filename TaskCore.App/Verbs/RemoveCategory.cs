@@ -1,6 +1,7 @@
 using CommandCore.Library.Attributes;
 using CommandCore.Library.PublicBase;
 using TaskCore.App.Options;
+using TaskCore.App.Views;
 using TaskCore.Dal.Interfaces;
 
 namespace TaskCore.App.Verbs
@@ -17,7 +18,12 @@ namespace TaskCore.App.Verbs
 
         public override VerbViewBase Run()
         {
-            throw new System.NotImplementedException();
+            if (Options.CategoryName.ToLower() != "inbox")
+            {
+                _categoryRepository.DeleteByName(Options.CategoryName);
+            }
+
+            return new RemoveCategoryView(Options);
         }
     }
 }
