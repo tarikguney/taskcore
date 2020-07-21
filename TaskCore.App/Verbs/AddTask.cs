@@ -13,14 +13,31 @@ namespace TaskCore.App.Verbs
     public class AddTask : VerbBase<AddTaskOptions>
     {
         private readonly ITodoTaskRepository _todoTaskRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public AddTask(ITodoTaskRepository todoTaskRepository)
+        public AddTask(ITodoTaskRepository todoTaskRepository, ICategoryRepository categoryRepository)
         {
             _todoTaskRepository = todoTaskRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public override VerbViewBase Run()
         {
+            Category category = new Category();
+            // Inbox is the default category, which cannot be deleted, added, or edited.
+            if (string.IsNullOrWhiteSpace(Options.Category))
+            {
+                category.Name = "Inbox";
+            }
+            else if (_categoryRepository.GetByName(Options.Category) == null)
+            {
+                return new AddTaskNoCategoryView(Options.Category);
+            }
+            else
+            {
+                category.Name = Options.Category;
+            }
+
             // TODO Perform some input validation here, for required fields, etc.
             _todoTaskRepository.Add(new TodoTask()
             {
@@ -28,14 +45,14 @@ namespace TaskCore.App.Verbs
                 DueDateTime = Options.DueDate != null
                     ? DateTimeOffset.Parse(Options.DueDate, CultureInfo.CurrentCulture)
                     : (DateTimeOffset?) null,
-                //TODO check if the category exists first, otherwise show a message. The category must be case-insensitive
-                CategoryId = Options.Category,
+                // CategoryId is getter only hash value so we don't need to make a DB call to get it by the category name.
+                CategoryId = category.CategoryId,
                 Priority = Options.Priority,
                 Completed = Options.Completed,
                 CreationDate = DateTimeOffset.Now
             });
 
-            return new AddTaskView(Options);
+            return new AddTaskView(Options, category);
         }
     }
 }

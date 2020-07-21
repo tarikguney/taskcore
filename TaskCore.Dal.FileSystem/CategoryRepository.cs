@@ -8,7 +8,7 @@ namespace TaskCore.Dal.FileSystem
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private FileManager _fileManager;
+        private readonly FileManager _fileManager;
 
         public CategoryRepository()
         {
@@ -17,6 +17,11 @@ namespace TaskCore.Dal.FileSystem
 
         public Category GetByName(string categoryName)
         {
+            if (categoryName.ToLower() == "inbox")
+            {
+                return new Category() {Name = "Inbox"};
+            }
+
             var content = _fileManager.GetCategory(new Category() {Name = categoryName}.CategoryId);
             return content == null
                 ? null
