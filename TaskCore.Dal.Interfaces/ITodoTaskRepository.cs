@@ -8,7 +8,7 @@ namespace TaskCore.Dal.Interfaces
         IReadOnlyList<TodoTask> GetActiveTasksOrderedByAddedDate(bool includeCompletedTasks = false);
         IReadOnlyList<TodoTask> GetCompletedTasksOrderedByAddedDate(bool includeCompletedTasks = false);
         void Update(TodoTask task);
-        IReadOnlyList<TodoTask> GetByCategory(string categoryId);
+        IReadOnlyList<TodoTask> GetActiveTasksByCategoryName(string categoryName);
         void Add(TodoTask task);
         void Delete(TodoTask task);
         void MarkComplete(TodoTask task);

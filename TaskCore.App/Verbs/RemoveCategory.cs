@@ -10,10 +10,13 @@ namespace TaskCore.App.Verbs
     public class RemoveCategory : VerbBase<RemoveCategoryOptions>
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ITodoTaskRepository _todoTaskRepository;
 
-        public RemoveCategory(ICategoryRepository categoryRepository)
+        public RemoveCategory(ICategoryRepository categoryRepository,
+            ITodoTaskRepository todoTaskRepository)
         {
             _categoryRepository = categoryRepository;
+            _todoTaskRepository = todoTaskRepository;
         }
 
         public override VerbViewBase Run()
@@ -21,6 +24,11 @@ namespace TaskCore.App.Verbs
             if (Options.CategoryName.ToLower() != "inbox")
             {
                 _categoryRepository.DeleteByName(Options.CategoryName);
+                var activeTasks = _todoTaskRepository.GetActiveTasksByCategoryName(Options.CategoryName);
+                foreach (var task in activeTasks)
+                {
+                    _todoTaskRepository.Delete(task);
+                }
             }
 
             return new RemoveCategoryView(Options);

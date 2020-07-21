@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -62,7 +61,7 @@ namespace TaskCore.Dal.FileSystem
             _fileManager.SaveCompletedTask(task.Id.ToString(), JObject.FromObject(task).ToString());
         }
 
-        public IReadOnlyList<TodoTask> GetByCategory(string categoryId)
+        public IReadOnlyList<TodoTask> GetActiveTasksByCategoryName(string categoryName)
         {
             throw new NotImplementedException();
         }
