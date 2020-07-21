@@ -17,7 +17,7 @@ namespace TaskCore.Dal.FileSystem
 
         public Category GetByName(string categoryName)
         {
-            var content = _fileManager.GetCategory(GenerateCategoryId(categoryName));
+            var content = _fileManager.GetCategory(new Category() {Name = categoryName}.CategoryId);
             return content == null
                 ? null
                 : new JsonSerializer().Deserialize<Category>(new JsonTextReader(new StringReader(content)));
@@ -25,7 +25,6 @@ namespace TaskCore.Dal.FileSystem
 
         public Category Add(Category category)
         {
-            category.CategoryId = GenerateCategoryId(category.Name);
             var content = JObject.FromObject(category);
             _fileManager.SaveCategory(category.CategoryId, content.ToString());
             return category;
@@ -33,32 +32,8 @@ namespace TaskCore.Dal.FileSystem
 
         public bool DeleteByName(string categoryName)
         {
-            _fileManager.DeleteCategory(GenerateCategoryId(categoryName));
+            _fileManager.DeleteCategory(new Category() {Name = categoryName}.CategoryId);
             return true;
-        }
-
-        private static string GenerateCategoryId(string categoryName)
-        {
-            return GenerateHash(categoryName.ToLower()).ToString();
-        }
-
-        private static int GenerateHash(string str)
-        {
-            unchecked
-            {
-                int hash1 = (5381 << 16) + 5381;
-                int hash2 = hash1;
-
-                for (int i = 0; i < str.Length; i += 2)
-                {
-                    hash1 = ((hash1 << 5) + hash1) ^ str[i];
-                    if (i == str.Length - 1)
-                        break;
-                    hash2 = ((hash2 << 5) + hash2) ^ str[i + 1];
-                }
-
-                return hash1 + (hash2 * 1566083941);
-            }
         }
     }
 }

@@ -3,6 +3,7 @@ using CommandCore.Library.PublicBase;
 using TaskCore.App.Options;
 using TaskCore.App.Views;
 using TaskCore.Dal.Interfaces;
+using TaskCore.Dal.Models;
 
 namespace TaskCore.App.Verbs
 {
@@ -24,7 +25,10 @@ namespace TaskCore.App.Verbs
             if (Options.CategoryName.ToLower() != "inbox")
             {
                 _categoryRepository.DeleteByName(Options.CategoryName);
-                var activeTasks = _todoTaskRepository.GetActiveTasksByCategoryName(Options.CategoryName);
+                var activeTasks = _todoTaskRepository.GetActiveTasksByCategoryName(new Category()
+                {
+                    Name = Options.CategoryName
+                });
                 foreach (var task in activeTasks)
                 {
                     _todoTaskRepository.Delete(task);

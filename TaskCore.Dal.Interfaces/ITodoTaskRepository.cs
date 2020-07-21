@@ -5,10 +5,10 @@ namespace TaskCore.Dal.Interfaces
 {
     public interface ITodoTaskRepository
     {
-        IReadOnlyList<TodoTask> GetActiveTasksOrderedByAddedDate(bool includeCompletedTasks = false);
+        IReadOnlyList<TodoTask> GetActiveTasksOrderedByAddedDate();
         IReadOnlyList<TodoTask> GetCompletedTasksOrderedByAddedDate(bool includeCompletedTasks = false);
         void Update(TodoTask task);
-        IReadOnlyList<TodoTask> GetActiveTasksByCategoryName(string categoryName);
+        IReadOnlyList<TodoTask> GetActiveTasksByCategoryName(Category category);
         void Add(TodoTask task);
         void Delete(TodoTask task);
         void MarkComplete(TodoTask task);

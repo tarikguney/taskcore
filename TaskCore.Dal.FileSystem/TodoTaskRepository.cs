@@ -19,7 +19,7 @@ namespace TaskCore.Dal.FileSystem
             _fileManager = new FileManager();
         }
 
-        public IReadOnlyList<TodoTask> GetActiveTasksOrderedByAddedDate(bool includeCompletedTasks = false)
+        public IReadOnlyList<TodoTask> GetActiveTasksOrderedByAddedDate()
         {
             var activeTasks = _fileManager.GetActiveTasksContents();
             return activeTasks
@@ -61,9 +61,10 @@ namespace TaskCore.Dal.FileSystem
             _fileManager.SaveCompletedTask(task.Id.ToString(), JObject.FromObject(task).ToString());
         }
 
-        public IReadOnlyList<TodoTask> GetActiveTasksByCategoryName(string categoryName)
+        public IReadOnlyList<TodoTask> GetActiveTasksByCategoryName(Category category)
         {
-            throw new NotImplementedException();
+            var allActiveTasks = GetActiveTasksOrderedByAddedDate();
+            return allActiveTasks.Where(a => a.CategoryId == category.CategoryId).ToList();
         }
 
         public void Add(TodoTask task)
