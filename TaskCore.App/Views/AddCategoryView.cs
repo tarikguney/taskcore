@@ -16,7 +16,7 @@ namespace TaskCore.App.Views
         public override void RenderResponse()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($" Added category \"{_options.Title}\"");
+            Console.WriteLine($"Added category \"{_options.Title}\"");
             Console.ResetColor();
         }
     }
