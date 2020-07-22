@@ -23,6 +23,11 @@ namespace TaskCore.App.Verbs
 
         public override VerbViewBase Run()
         {
+            if (string.IsNullOrWhiteSpace(Options.Title))
+            {
+                return new AddTaskRequiredFieldsMissingView();
+            }
+            
             Category category = new Category();
             // Inbox is the default category, which cannot be deleted, added, or edited.
             if (string.IsNullOrWhiteSpace(Options.Category))
