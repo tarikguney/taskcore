@@ -45,7 +45,7 @@ namespace TaskCore.App.Verbs
                 DueDateTime = Options.DueDate != null
                     ? DateTimeOffset.Parse(Options.DueDate, CultureInfo.CurrentCulture)
                     : (DateTimeOffset?) null,
-                // CategoryId is getter only hash value so we don't need to make a DB call to get it by the category name.
+                // CategoryId is a getter only hash value so we don't need to make a DB call to get it by the category name.
                 CategoryId = category.CategoryId,
                 Priority = Options.Priority,
                 Completed = Options.Completed,
