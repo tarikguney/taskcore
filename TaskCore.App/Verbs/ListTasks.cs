@@ -12,22 +12,27 @@ namespace TaskCore.App.Verbs
     public class ListTasks : VerbBase<ListTasksOptions>
     {
         private readonly ITodoTaskRepository _todoTaskRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IPriorityColorChooser _priorityColorChooser;
 
-        public ListTasks(ITodoTaskRepository todoTaskRepository, IPriorityColorChooser priorityColorChooser)
+        public ListTasks(ITodoTaskRepository todoTaskRepository, 
+            ICategoryRepository categoryRepository,
+            IPriorityColorChooser priorityColorChooser)
         {
             _todoTaskRepository = todoTaskRepository;
+            _categoryRepository = categoryRepository;
             _priorityColorChooser = priorityColorChooser;
         }
 
         public override VerbViewBase Run()
         {
             var activeTasks = _todoTaskRepository.GetActiveTasksOrderedByAddedDate();
+            IReadOnlyList<Category> categories = _categoryRepository.GetAllCategories();
             var completedTasks = Options.ShowCompletedTasks
                 ? _todoTaskRepository.GetCompletedTasksOrderedByAddedDate()
                 : new List<TodoTask>();
 
-            return new ListTasksView(Options, activeTasks, completedTasks, _priorityColorChooser);
+            return new ListTasksView(Options, activeTasks, completedTasks, categories, _priorityColorChooser);
         }
     }
 }

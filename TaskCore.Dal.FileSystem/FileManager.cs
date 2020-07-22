@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml.XPath;
 using TaskCore.Dal.Models;
 
@@ -61,12 +62,12 @@ namespace TaskCore.Dal.FileSystem
             return allTaskFiles.Select(a => File.ReadAllText(a.FullName)).ToList();
         }
 
-        public void SaveCategory(string fileName, string content)
+        public void SaveCategoryFile(string fileName, string content)
         {
             File.WriteAllText(Path.Combine(_categoriesDir.FullName, fileName), content);
         }
 
-        public void DeleteCategory(string fileName)
+        public void DeleteCategoryFile(string fileName)
         {
             var fileAbsolutePath = Path.Combine(_categoriesDir.FullName, fileName);
             if (File.Exists(fileAbsolutePath))
@@ -75,10 +76,16 @@ namespace TaskCore.Dal.FileSystem
             }
         }
 
-        public string? GetCategory(string fileName)
+        public string? GetCategoryFile(string fileName)
         {
             var fileAbsolutePath = Path.Combine(_categoriesDir.FullName, fileName);
             return File.Exists(fileAbsolutePath) ? File.ReadAllText(fileAbsolutePath) : null;
+        }
+
+        public List<string> GetAlCategoryFiles()
+        {
+            var files = _categoriesDir.GetFiles();
+            return files.Select(a => File.ReadAllText(a.FullName)).ToList();
         }
     }
 }

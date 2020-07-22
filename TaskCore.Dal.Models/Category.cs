@@ -2,8 +2,8 @@ namespace TaskCore.Dal.Models
 {
     public class Category
     {
-        public string CategoryId => GenerateHash(Name.ToLower()).ToString();
-        public string Name { get; set; }
+        public string CategoryId => GenerateHash(Name!.ToLower()).ToString();
+        public string? Name { get; set; }
         private static int GenerateHash(string str)
         {
             unchecked
