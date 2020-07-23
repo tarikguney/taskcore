@@ -47,7 +47,6 @@ namespace TaskCore.App.Views
 
         private void RenderCompletedTasks()
         {
-            // TODO Use CategoryId to get the actual category title and show it instead.
             foreach (var task in _completedTasks)
             {
                 Write($"- [X] \"{task.Title}\" {task.Priority} in {_categoriesDict[task.CategoryId]}");
@@ -62,7 +61,6 @@ namespace TaskCore.App.Views
 
         private void RenderActiveTasks()
         {
-            // TODO Need to display the task creation date.
             for (var i = 0; i < _activeTasks.Count; i++)
             {
                 var task = _activeTasks[i];
@@ -87,7 +85,6 @@ namespace TaskCore.App.Views
                 Write($"P{task.Priority}");
                 ResetColor();
                 Write(" ");
-                // TODO Outputting the CategoryId is not correct. Use Category Title instead.
                 Write($"in {_categoriesDict[task.CategoryId]}");
                 if (_options.Verbose)
                 {
