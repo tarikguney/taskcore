@@ -10,5 +10,8 @@ namespace TaskCore.App.Options
         
         [OptionName("verbose",Alias = "v")]
         public bool Verbose { get; set; }
+        
+        [OptionName("category", Alias="ca")]
+        public string CategoryName { get; set; }
     }
 }
