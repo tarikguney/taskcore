@@ -76,7 +76,7 @@ namespace TaskCore.App.Views
             for (var i = 0; i < activeTasks.Count; i++)
             {
                 var task = _activeTasks[i];
-                if (!string.IsNullOrWhiteSpace(categoryId) && task.CategoryId == categoryId)
+                if (!string.IsNullOrWhiteSpace(categoryId) && task.CategoryId != categoryId)
                 {
                     continue;
                 }
