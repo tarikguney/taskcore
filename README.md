@@ -14,7 +14,7 @@ I am developing this application during COVID-19 pandemic, and it is also a sort
 
 Why not? Not everyone likes fancy GUIs or works in X Window environments or prefer leaving their simple looking terminal environment. This application is not for everyone. You should have a special taste for the command line environments. 
 
-## Early Demo
+## Demo
 
 ![Demo](./taskcore_demo.gif)
 
