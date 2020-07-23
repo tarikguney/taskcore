@@ -39,7 +39,7 @@ jobs:
           release_name="TaskCore-$tag-${{ matrix.target }}"
 
           # Build everything
-          dotnet publish ./TaskCore.App/TaskCore.App.csproj --framework netcoreapp3.1 --runtime "${{ matrix.target }}" -c Release -o "$release_name" --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
+          dotnet publish ./TaskCore.App/TaskCore.App.csproj --framework netcoreapp3.1 --runtime "${{ matrix.target }}" -c Release -o $release_name --self-contained true /p:PublishSingleFile=true /p:PublishTrimmed=true
 
           # Pack files
           if [ "${{ matrix.target }}" == "win-x64" ]; then
