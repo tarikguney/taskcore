@@ -30,19 +30,25 @@ Add a new task item with priority 1 (highest) and due date:
 taskcore add -n "Finish up Task Core" -d 10/11/2020 -p 1
 ```
 
-List the existing task items:
-```bash
-taskcore ls
-```
-
 Complete a task item:
 ```bash
 taskcore c -i 3
 ```
-Filter by date:
+
+List all active task items:
+```bash
+taskcore ls
+```
+
+List all task items including completed ones:
 
 ```bash
-taskcore filter -d today
+taskcore ls -c
+```
+
+List tasks under a given category:
+```
+taskcore ls -ca Project
 ```
 
 Remove a task item:
