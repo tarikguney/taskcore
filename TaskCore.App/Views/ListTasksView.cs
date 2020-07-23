@@ -47,7 +47,14 @@ namespace TaskCore.App.Views
 
         private void RenderCompletedTasks()
         {
-            foreach (var task in _completedTasks)
+            var completedTask = _completedTasks.AsEnumerable();
+            if (!string.IsNullOrWhiteSpace(_options.CategoryName))
+            {
+                var categoryId = new Category() {Name = _options.CategoryName}.CategoryId;
+                completedTask = completedTask.Where(a => a.CategoryId == categoryId);
+            }
+
+            foreach (var task in completedTask)
             {
                 Write($"- [X] \"{task.Title}\" {task.Priority} in {_categoriesDict[task.CategoryId]}");
                 if (_options.Verbose)
@@ -61,9 +68,19 @@ namespace TaskCore.App.Views
 
         private void RenderActiveTasks()
         {
-            for (var i = 0; i < _activeTasks.Count; i++)
+            var activeTasks = _activeTasks;
+            var categoryId = !string.IsNullOrWhiteSpace(_options.CategoryName)
+                ? new Category() {Name = _options.CategoryName}.CategoryId
+                : null;
+
+            for (var i = 0; i < activeTasks.Count; i++)
             {
                 var task = _activeTasks[i];
+                if (!string.IsNullOrWhiteSpace(categoryId) && task.CategoryId == categoryId)
+                {
+                    continue;
+                }
+
                 var usePriorityColor = task.Priority > 0 && task.Priority < 4;
                 if (usePriorityColor)
                 {
