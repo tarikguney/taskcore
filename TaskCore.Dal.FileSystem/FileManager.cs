@@ -1,31 +1,31 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml.XPath;
-using TaskCore.Dal.Models;
 
 namespace TaskCore.Dal.FileSystem
 {
     internal class FileManager
     {
+        string DB_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "taskcore");
+
         private readonly DirectoryInfo _activeTasksDir;
         private readonly DirectoryInfo _completedTasksDir;
         private readonly DirectoryInfo _categoriesDir;
 
         public FileManager()
         {
-            if (!Directory.Exists("./db"))
+            if (!Directory.Exists(DB_PATH))
             {
-                Directory.CreateDirectory("./db");
-                Directory.CreateDirectory("./db/active");
-                Directory.CreateDirectory("./db/completed");
-                Directory.CreateDirectory("./db/categories");
+                Directory.CreateDirectory(DB_PATH);
+                Directory.CreateDirectory(Path.Combine(DB_PATH, "active"));
+                Directory.CreateDirectory(Path.Combine(DB_PATH, "completed"));
+                Directory.CreateDirectory(Path.Combine(DB_PATH, "categories"));
             }
 
-            _activeTasksDir = new DirectoryInfo("./db/active");
-            _completedTasksDir = new DirectoryInfo("./db/completed");
-            _categoriesDir = new DirectoryInfo("./db/categories");
+            _activeTasksDir = new DirectoryInfo(Path.Combine(DB_PATH, "active"));
+            _completedTasksDir = new DirectoryInfo(Path.Combine(DB_PATH, "completed"));
+            _categoriesDir = new DirectoryInfo(Path.Combine(DB_PATH, "categories"));
         }
 
         public void SaveActiveTask(string fileName, string content)
