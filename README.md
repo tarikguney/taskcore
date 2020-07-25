@@ -18,6 +18,10 @@ Why not? Not everyone likes fancy GUIs or works in X Window environments or pref
 
 ![Demo](./taskcore_demo.gif)
 
+## How to contribute? 
+
+I am adding the new features I am planning to add here: https://github.com/tarikguney/taskcore/projects/1. You can grab one of the not active one, and let me know if you are working on them. You can also be a beta tester and create issue here if you see any problem: https://github.com/tarikguney/taskcore/issues. Thanks for considering to contribute to the project.
+
 ## How it works?
 
 ### Simple Commands
