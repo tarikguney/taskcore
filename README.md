@@ -104,12 +104,12 @@ dotnet publish -c Release --self-contained true --runtime linux-x64 -p:PublishSi
 
 #### Windows 10
 ```
-dotnet publish -c Release --self-contained true --runtime win10-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true .\TaskCore.App.csproj
+dotnet publish -c Release --self-contained true --runtime win10-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true .\TaskCore.App.csproj
 ```
 
 #### MacOS
 ```
-dotnet publish -c Release --self-contained true --runtime osx-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true .\TaskCore.App.csproj
+dotnet publish -c Release --self-contained true --runtime osx-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true .\TaskCore.App.csproj
 ```
 
 Then, go to `in/Release/netcoreapp3.1/osx-x64/publish` to locate outputted executable named `taskcore` and run the `taskcore` using the subcommands above.
