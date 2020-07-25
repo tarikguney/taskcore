@@ -7,7 +7,7 @@ namespace TaskCore.Dal.FileSystem
 {
     internal class FileManager
     {
-        string DB_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "taskcore");
+        private readonly string DB_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "taskcore");
 
         private readonly DirectoryInfo _activeTasksDir;
         private readonly DirectoryInfo _completedTasksDir;
