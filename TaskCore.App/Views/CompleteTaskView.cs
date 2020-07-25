@@ -1,20 +1,25 @@
 using System;
+using System.Collections.Generic;
 using CommandCore.Library.PublicBase;
 using TaskCore.Dal.Models;
 
 namespace TaskCore.App.Views
 {
-    public class CompleteTaskView: VerbViewBase
+    public class CompleteTaskView : VerbViewBase
     {
-        private readonly TodoTask _task;
+        private readonly List<TodoTask> _tasks;
 
-        public CompleteTaskView(TodoTask task)
+        public CompleteTaskView(List<TodoTask> tasks)
         {
-            _task = task;
+            _tasks = tasks;
         }
+
         public override void RenderResponse()
         {
-            Console.WriteLine($"Completed the task \"{_task.Title}\"");
+            foreach (var task in _tasks)
+            {
+                Console.WriteLine($"Completed the task \"{task.Title}\"");
+            }
         }
     }
 }

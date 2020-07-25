@@ -1,3 +1,4 @@
+using System.Linq;
 using CommandCore.Library.Attributes;
 using CommandCore.Library.PublicBase;
 using TaskCore.App.Options;
@@ -7,7 +8,7 @@ using TaskCore.Dal.Interfaces;
 namespace TaskCore.App.Verbs
 {
     [VerbName("c", Description = "Marks a given task as complete.")]
-    public class CompleteTask: VerbBase<CompleteTaskOptions>
+    public class CompleteTask : VerbBase<CompleteTaskOptions>
     {
         private readonly ITodoTaskRepository _todoTaskRepository;
 
@@ -15,14 +16,19 @@ namespace TaskCore.App.Verbs
         {
             _todoTaskRepository = todoTaskRepository;
         }
+
         public override VerbViewBase Run()
         {
             // TODO By decreasing the number of query calls, the performance can be improved here, but heck yeah for now.
             // I will consider performance tuning in the next iteration.
             var tasks = _todoTaskRepository.GetActiveTasksOrderedByAddedDate();
-            var activeTask = tasks[Options.TaskId];
-            _todoTaskRepository.MarkComplete(activeTask);
-            return new CompleteTaskView(activeTask);
+            var activeTasks = tasks.Where((t, i) => Options.TaskIds.Contains(i)).ToList();
+            foreach (var activeTask in activeTasks)
+            {
+                _todoTaskRepository.MarkComplete(activeTask);
+            }
+
+            return new CompleteTaskView(activeTasks);
         }
     }
 }

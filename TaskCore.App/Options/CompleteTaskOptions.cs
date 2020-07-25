@@ -6,6 +6,6 @@ namespace TaskCore.App.Options
     public class CompleteTaskOptions : VerbOptionsBase
     {
         [OptionName("taskId", Alias = "i")]
-        public int TaskId { get; set; }
+        public int[] TaskIds { get; set; }
     }
 }
