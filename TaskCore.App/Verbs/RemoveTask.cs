@@ -1,8 +1,11 @@
+using System.Linq;
+using System.Threading.Tasks;
 using CommandCore.Library.Attributes;
 using CommandCore.Library.PublicBase;
 using TaskCore.App.Options;
 using TaskCore.App.Views;
 using TaskCore.Dal.Interfaces;
+using TaskCore.Dal.Models;
 
 namespace TaskCore.App.Verbs
 {
@@ -22,10 +25,12 @@ namespace TaskCore.App.Verbs
             // hard for the users to type the full id number. That's why the TaskOrder is mapped to ID even though
             // it is just a user construct.
             var activeTasks = _todoTaskRepository.GetActiveTasksOrderedByAddedDate();
-            // TODO check if the index is out of the bound
-            var task = activeTasks[Options.TaskOrder];
-            _todoTaskRepository.Delete(task);
-            return new RemoveTaskView(task);
+            var toBeCompletedTasks = activeTasks.Where((a, i) => Options.TaskIds.Contains(i)).ToList();
+            foreach (TodoTask task in toBeCompletedTasks)
+            {
+                _todoTaskRepository.Delete(task);
+            }
+            return new RemoveTaskView(toBeCompletedTasks);
         }
     }
 }
