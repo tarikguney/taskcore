@@ -24,7 +24,7 @@ I am adding the new features I am planning to add here: https://github.com/tarik
 
 ## How it works?
 
-### Simple Commands
+### Managing Tasks
 
 Add a new task item with priority 1 (highest) and due date:
 ```bash
@@ -57,7 +57,7 @@ Remove a task item - Passing multiple Ids is allowed:
 taskcore rm -i 3 2 3
 ```
 
-### Categories
+### Managing Categories
 
 Add a new category:
 
