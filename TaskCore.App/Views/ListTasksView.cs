@@ -30,7 +30,7 @@ namespace TaskCore.App.Views
         public override void RenderResponse()
         {
             ForegroundColor = ConsoleColor.Blue;
-            WriteLine("[ ] ACTIVE TASKS:");
+            WriteLine($"[ ] ACTIVE TASKS - Total #: {_activeTasks.Count}");
             ResetColor();
             WriteLine("-----------------");
             RenderActiveTasks();
@@ -38,7 +38,7 @@ namespace TaskCore.App.Views
             {
                 WriteLine();
                 ForegroundColor = ConsoleColor.Green;
-                WriteLine("[✓] COMPLETED TASKS:");
+                WriteLine($"[X] COMPLETED TASKS - Total #: {_completedTasks.Count}");
                 ResetColor();
                 WriteLine("-----------------");
                 RenderCompletedTasks();
