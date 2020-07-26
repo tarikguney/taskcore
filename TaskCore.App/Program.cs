@@ -15,6 +15,7 @@ namespace TaskCore.App
                 sp.Register<IPriorityColorChooser, PriorityColorChooser>();
                 sp.Register<ICategoryRepository, CategoryRepository>();
             });
+            
             return commandCoreApp.Parse(args);
         }
     }

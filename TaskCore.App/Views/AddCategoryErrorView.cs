@@ -18,6 +18,7 @@ namespace TaskCore.App.Views
             Console.WriteLine(
                 $"Category \"{_options.Title}\" already exists. Please use a different category name. Remember, the category names are not case sensitive.");
             Console.ResetColor();
+            Environment.ExitCode = 103;
         }
     }
 }

@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CommandCore.Library" Version="1.4.0-beta.1" />
+      <PackageReference Include="CommandCore.Library" Version="1.4.0-beta.2" />
     </ItemGroup>
 
     <ItemGroup>

@@ -10,6 +10,7 @@ namespace TaskCore.App.Views
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Task title is required. Please enter one to create a new task item.");
             Console.ResetColor();
+            Environment.ExitCode = 102;
         }
     }
 }

@@ -18,6 +18,7 @@ namespace TaskCore.App.Views
             Console.WriteLine(
                 $"Cannot find category named {_categoryName}. Either add it first or leave it empty so that default category \"Inbox\" can be used");
             Console.ResetColor();
+            Environment.ExitCode = 100;
         }
     }
 }
