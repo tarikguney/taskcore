@@ -67,7 +67,7 @@ taskcore addc -n "Work"
 Add a task item to a category:
 
 ```c#
-taskcore add -t "Check if the command works" -d today -c Work
+taskcore add -t "Check if the command works" -d 01/01/2010 -c Work
 ```
 Remove a category:
 
