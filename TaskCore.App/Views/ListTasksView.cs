@@ -31,16 +31,17 @@ namespace TaskCore.App.Views
         {
             ForegroundColor = ConsoleColor.Blue;
             WriteLine($"[ ] ACTIVE TASKS - Total #: {_activeTasks.Count}");
+            WriteLine("--------------------------------");
             ResetColor();
-            WriteLine("-----------------");
+
             RenderActiveTasks();
             if (_completedTasks.Count > 0)
             {
                 WriteLine();
                 ForegroundColor = ConsoleColor.Green;
                 WriteLine($"[X] COMPLETED TASKS - Total #: {_completedTasks.Count}");
+                WriteLine("----------------------------------");
                 ResetColor();
-                WriteLine("-----------------");
                 RenderCompletedTasks();
             }
         }
