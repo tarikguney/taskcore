@@ -35,6 +35,11 @@ namespace TaskCore.Dal.FileSystem
                 : dbPath;
         }
         
+        public void RemoveDbFolder()
+        {
+            Directory.Delete(GetDbPath(), true);
+        }
+
         public void SaveActiveTask(string fileName, string content)
         {
             File.WriteAllText(Path.Combine(_activeTasksDir.FullName, fileName),
