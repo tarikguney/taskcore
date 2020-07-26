@@ -7,27 +7,34 @@ namespace TaskCore.Dal.FileSystem
 {
     internal class FileManager
     {
-        private readonly string DB_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "taskcore");
-
         private readonly DirectoryInfo _activeTasksDir;
         private readonly DirectoryInfo _completedTasksDir;
         private readonly DirectoryInfo _categoriesDir;
 
         public FileManager()
         {
-            if (!Directory.Exists(DB_PATH))
+            string dbPath = GetDbPath();
+            if (!Directory.Exists(dbPath))
             {
-                Directory.CreateDirectory(DB_PATH);
-                Directory.CreateDirectory(Path.Combine(DB_PATH, "active"));
-                Directory.CreateDirectory(Path.Combine(DB_PATH, "completed"));
-                Directory.CreateDirectory(Path.Combine(DB_PATH, "categories"));
+                Directory.CreateDirectory(dbPath);
+                Directory.CreateDirectory(Path.Combine(dbPath, "active"));
+                Directory.CreateDirectory(Path.Combine(dbPath, "completed"));
+                Directory.CreateDirectory(Path.Combine(dbPath, "categories"));
             }
 
-            _activeTasksDir = new DirectoryInfo(Path.Combine(DB_PATH, "active"));
-            _completedTasksDir = new DirectoryInfo(Path.Combine(DB_PATH, "completed"));
-            _categoriesDir = new DirectoryInfo(Path.Combine(DB_PATH, "categories"));
+            _activeTasksDir = new DirectoryInfo(Path.Combine(dbPath, "active"));
+            _completedTasksDir = new DirectoryInfo(Path.Combine(dbPath, "completed"));
+            _categoriesDir = new DirectoryInfo(Path.Combine(dbPath, "categories"));
         }
 
+        static string GetDbPath()
+        {
+            string dbPath = Environment.GetEnvironmentVariable("TASKCORE_DB_PATH") ?? string.Empty;
+            return string.IsNullOrWhiteSpace(dbPath)
+                ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "taskcore")
+                : dbPath;
+        }
+        
         public void SaveActiveTask(string fileName, string content)
         {
             File.WriteAllText(Path.Combine(_activeTasksDir.FullName, fileName),
