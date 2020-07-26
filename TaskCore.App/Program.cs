@@ -11,6 +11,7 @@ namespace TaskCore.App
             var commandCoreApp = new CommandCoreApp();
             commandCoreApp.ConfigureServices(sp =>
             {
+                sp.Register<IDbRepository, DbRepository>();
                 sp.Register<ITodoTaskRepository, TodoTaskRepository>();
                 sp.Register<IPriorityColorChooser, PriorityColorChooser>();
                 sp.Register<ICategoryRepository, CategoryRepository>();

@@ -75,6 +75,14 @@ Remove a category:
 taskcore rmc -n "Work"
 ```
 
+### Clear Database
+
+Delete the database folder, `--force` is required:
+
+```bash
+taskcore clear --force
+```
+
 ### Configuration
 
 TaskCore supports the following environment variables:
