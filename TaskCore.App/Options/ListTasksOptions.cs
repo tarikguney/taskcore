@@ -13,5 +13,8 @@ namespace TaskCore.App.Options
         
         [OptionName("category", Alias="ca")]
         public string CategoryName { get; set; }
+
+        [OptionName("priority", Alias = "p")]
+        public int Priority { get; set; }
     }
 }

@@ -51,13 +51,37 @@ namespace TaskCore.App.Views
             var completedTask = _completedTasks.AsEnumerable();
             if (!string.IsNullOrWhiteSpace(_options.CategoryName))
             {
-                var categoryId = new Category() {Name = _options.CategoryName}.CategoryId;
+                var categoryId = new Category() { Name = _options.CategoryName }.CategoryId;
                 completedTask = completedTask.Where(a => a.CategoryId == categoryId);
+            }
+            if (_options.Priority != 0)
+            {
+                completedTask = completedTask.Where(x => x.Priority == _options.Priority).ToList();
+            }
+
+            if (completedTask.Count() == 0)
+            {
+                if (!string.IsNullOrWhiteSpace(_options.CategoryName) && _options.Priority != 0)
+                {
+                    Write("There's no Completed task with the Priority ID: {0} and the Category name: {1}", _options.Priority, _options.CategoryName);
+                }
+                else if(_options.Priority != 0)
+                {
+                    Write("There's no Completed task with the Priority ID: {0}", _options.Priority);
+                }
+                else if (!string.IsNullOrWhiteSpace(_options.CategoryName))
+                {
+                    Write("There's no Completed task with the Category name: {0}", _options.CategoryName);
+                }
+                else
+                {
+                    Write("There's no Completed task");
+                }
             }
 
             foreach (var task in completedTask)
             {
-                Write($"- [X] \"{task.Title}\" {task.Priority} in {_categoriesDict[task.CategoryId]}");
+                Write($"- [X] \"{task.Title}\" P{task.Priority} in {_categoriesDict[task.CategoryId]}");
                 if (_options.Verbose)
                 {
                     Write($" - Created at {task.CreationDate:F}, completed at {task.CompletionDate:F}");
@@ -70,17 +94,40 @@ namespace TaskCore.App.Views
         private void RenderActiveTasks()
         {
             var activeTasks = _activeTasks;
-            var categoryId = !string.IsNullOrWhiteSpace(_options.CategoryName)
-                ? new Category() {Name = _options.CategoryName}.CategoryId
-                : null;
+            if (!string.IsNullOrWhiteSpace(_options.CategoryName))
+            {
+                var categoryId = new Category() { Name = _options.CategoryName }.CategoryId;
+                activeTasks = activeTasks.Where(x => x.CategoryId == categoryId).ToList();
+            }
+
+            if (_options.Priority != 0)
+            {
+                activeTasks = activeTasks.Where(x => x.Priority == _options.Priority).ToList();
+            }
+
+            if (activeTasks.Count() == 0)
+            {
+                if (!string.IsNullOrWhiteSpace(_options.CategoryName) && _options.Priority != 0)
+                {
+                    Write("There's no Active task with the Priority ID: {0} and the Category name: {1}", _options.Priority, _options.CategoryName);
+                }
+                else if (_options.Priority != 0)
+                {
+                    Write("There's no Active task with the Priority ID: {0}", _options.Priority);
+                }
+                else if (!string.IsNullOrWhiteSpace(_options.CategoryName))
+                {
+                    Write("There's no Active task with the Category name: {0}", _options.CategoryName);
+                }
+                else
+                {
+                    Write("There's no Active task");
+                }
+            }
 
             for (var i = 0; i < activeTasks.Count; i++)
             {
-                var task = _activeTasks[i];
-                if (!string.IsNullOrWhiteSpace(categoryId) && task.CategoryId != categoryId)
-                {
-                    continue;
-                }
+                var task = activeTasks[i];
 
                 var usePriorityColor = task.Priority > 0 && task.Priority < 4;
                 if (usePriorityColor)
