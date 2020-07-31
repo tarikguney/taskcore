@@ -35,6 +35,7 @@ namespace TaskCore.App.Views
             ResetColor();
 
             RenderActiveTasks();
+
             if (_completedTasks.Count > 0)
             {
                 WriteLine();
@@ -44,6 +45,28 @@ namespace TaskCore.App.Views
                 ResetColor();
                 RenderCompletedTasks();
             }
+        }
+
+
+        private void FeedbackIfThereIsntTask(string renderedTaskName)
+        {
+            if (!string.IsNullOrWhiteSpace(_options.CategoryName) && _options.Priority != 0)
+            {
+                Write("There's no {0} task with the Priority ID: {1} and the Category name: {2}", renderedTaskName, _options.Priority, _options.CategoryName);
+            }
+            else if (_options.Priority != 0)
+            {
+                Write("There's no {0} task with the Priority ID: {1}", renderedTaskName, _options.Priority);
+            }
+            else if (!string.IsNullOrWhiteSpace(_options.CategoryName))
+            {
+                Write("There's no {0} task with the Category name: {1}", renderedTaskName, _options.CategoryName);
+            }
+            else
+            {
+                Write("There's no {0} task", renderedTaskName);
+            }
+            return;
         }
 
         private void RenderCompletedTasks()
@@ -58,25 +81,10 @@ namespace TaskCore.App.Views
             {
                 completedTask = completedTask.Where(x => x.Priority == _options.Priority).ToList();
             }
-
             if (completedTask.Count() == 0)
             {
-                if (!string.IsNullOrWhiteSpace(_options.CategoryName) && _options.Priority != 0)
-                {
-                    Write("There's no Completed task with the Priority ID: {0} and the Category name: {1}", _options.Priority, _options.CategoryName);
-                }
-                else if(_options.Priority != 0)
-                {
-                    Write("There's no Completed task with the Priority ID: {0}", _options.Priority);
-                }
-                else if (!string.IsNullOrWhiteSpace(_options.CategoryName))
-                {
-                    Write("There's no Completed task with the Category name: {0}", _options.CategoryName);
-                }
-                else
-                {
-                    Write("There's no Completed task");
-                }
+                FeedbackIfThereIsntTask("Completed");
+                return;
             }
 
             foreach (var task in completedTask)
@@ -99,30 +107,14 @@ namespace TaskCore.App.Views
                 var categoryId = new Category() { Name = _options.CategoryName }.CategoryId;
                 activeTasks = activeTasks.Where(x => x.CategoryId == categoryId).ToList();
             }
-
             if (_options.Priority != 0)
             {
                 activeTasks = activeTasks.Where(x => x.Priority == _options.Priority).ToList();
             }
-
             if (activeTasks.Count() == 0)
             {
-                if (!string.IsNullOrWhiteSpace(_options.CategoryName) && _options.Priority != 0)
-                {
-                    Write("There's no Active task with the Priority ID: {0} and the Category name: {1}", _options.Priority, _options.CategoryName);
-                }
-                else if (_options.Priority != 0)
-                {
-                    Write("There's no Active task with the Priority ID: {0}", _options.Priority);
-                }
-                else if (!string.IsNullOrWhiteSpace(_options.CategoryName))
-                {
-                    Write("There's no Active task with the Category name: {0}", _options.CategoryName);
-                }
-                else
-                {
-                    Write("There's no Active task");
-                }
+                FeedbackIfThereIsntTask("Active");
+                return;
             }
 
             for (var i = 0; i < activeTasks.Count; i++)
