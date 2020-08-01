@@ -7,11 +7,11 @@ namespace TaskCore.App.Options
     {
         [OptionName("showcompleted", Alias = "c")]
         public bool ShowCompletedTasks { get; set; }
-        
         [OptionName("verbose",Alias = "v")]
         public bool Verbose { get; set; }
-        
         [OptionName("category", Alias="ca")]
         public string CategoryName { get; set; }
+        [OptionName("priority", Alias = "p")]
+        public int Priority { get; set; }
     }
 }

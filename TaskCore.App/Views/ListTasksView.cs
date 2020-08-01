@@ -35,6 +35,7 @@ namespace TaskCore.App.Views
             ResetColor();
 
             RenderActiveTasks();
+
             if (_completedTasks.Count > 0)
             {
                 WriteLine();
@@ -46,18 +47,48 @@ namespace TaskCore.App.Views
             }
         }
 
+
+        private void FeedbackIfThereIsntTask(string renderedTaskName)
+        {
+            if (!string.IsNullOrWhiteSpace(_options.CategoryName) && _options.Priority != 0)
+            {
+                Write("There's no {0} task with the Priority ID: {1} and the Category name: {2}", renderedTaskName, _options.Priority, _options.CategoryName);
+            }
+            else if (_options.Priority != 0)
+            {
+                Write("There's no {0} task with the Priority ID: {1}", renderedTaskName, _options.Priority);
+            }
+            else if (!string.IsNullOrWhiteSpace(_options.CategoryName))
+            {
+                Write("There's no {0} task with the Category name: {1}", renderedTaskName, _options.CategoryName);
+            }
+            else
+            {
+                Write("There's no {0} task", renderedTaskName);
+            }
+            return;
+        }
+
         private void RenderCompletedTasks()
         {
             var completedTask = _completedTasks.AsEnumerable();
             if (!string.IsNullOrWhiteSpace(_options.CategoryName))
             {
-                var categoryId = new Category() {Name = _options.CategoryName}.CategoryId;
+                var categoryId = new Category() { Name = _options.CategoryName }.CategoryId;
                 completedTask = completedTask.Where(a => a.CategoryId == categoryId);
+            }
+            if (_options.Priority != 0)
+            {
+                completedTask = completedTask.Where(x => x.Priority == _options.Priority).ToList();
+            }
+            if (completedTask.Count() == 0)
+            {
+                FeedbackIfThereIsntTask("Completed");
             }
 
             foreach (var task in completedTask)
             {
-                Write($"- [X] \"{task.Title}\" {task.Priority} in {_categoriesDict[task.CategoryId]}");
+                Write($"- [X] \"{task.Title}\" P{task.Priority} in {_categoriesDict[task.CategoryId]}");
                 if (_options.Verbose)
                 {
                     Write($" - Created at {task.CreationDate:F}, completed at {task.CompletionDate:F}");
@@ -70,17 +101,23 @@ namespace TaskCore.App.Views
         private void RenderActiveTasks()
         {
             var activeTasks = _activeTasks;
-            var categoryId = !string.IsNullOrWhiteSpace(_options.CategoryName)
-                ? new Category() {Name = _options.CategoryName}.CategoryId
-                : null;
+            if (!string.IsNullOrWhiteSpace(_options.CategoryName))
+            {
+                var categoryId = new Category() { Name = _options.CategoryName }.CategoryId;
+                activeTasks = activeTasks.Where(x => x.CategoryId == categoryId).ToList();
+            }
+            if (_options.Priority != 0)
+            {
+                activeTasks = activeTasks.Where(x => x.Priority == _options.Priority).ToList();
+            }
+            if (activeTasks.Count() == 0)
+            {
+                FeedbackIfThereIsntTask("Active");
+            }
 
             for (var i = 0; i < activeTasks.Count; i++)
             {
-                var task = _activeTasks[i];
-                if (!string.IsNullOrWhiteSpace(categoryId) && task.CategoryId != categoryId)
-                {
-                    continue;
-                }
+                var task = activeTasks[i];
 
                 var usePriorityColor = task.Priority > 0 && task.Priority < 4;
                 if (usePriorityColor)
