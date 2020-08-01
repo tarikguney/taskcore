@@ -9,7 +9,7 @@ namespace TaskCore.App.Options
         [OptionName("name", Alias = "n", Description = "Name of the task.")]
         public string Title { get; set; }
 
-        [OptionName("duedate", Alias = "d")]
+        [OptionName("duedate", Alias = "d", Description = "01/01/2010, 15(Adds 15 days from today and selects it), today, tomorrow, nextweek or \"next week\", nextmonth or \"next month\"")]
         public string DueDate { get; set; }
 
         [OptionName("priority", Alias = "p")]

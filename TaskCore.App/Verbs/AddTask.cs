@@ -27,7 +27,7 @@ namespace TaskCore.App.Verbs
             {
                 return new AddTaskRequiredFieldsMissingView();
             }
-            
+
             Category category = new Category();
             // Inbox is the default category, which cannot be deleted, added, or edited.
             if (string.IsNullOrWhiteSpace(Options.Category))
@@ -43,13 +43,54 @@ namespace TaskCore.App.Verbs
                 category.Name = Options.Category;
             }
 
+            if (!string.IsNullOrWhiteSpace(Options.DueDate))
+            {
+                string loweredDueDate = Options.DueDate.ToLower();
+
+                var isDueDateNumeric = int.TryParse(loweredDueDate, out _);
+
+                if (isDueDateNumeric)
+                {
+                    Options.DueDate = DateTime.Now.AddDays(int.Parse(loweredDueDate)).ToShortDateString();
+                }
+                else
+                {
+                    switch (loweredDueDate)
+                    {
+                        case "today":
+                            Options.DueDate = DateTime.Now.ToShortDateString();
+                            break;
+                        case "tomorrow":
+                            Options.DueDate = DateTime.Now.AddDays(1).ToShortDateString();
+                            break;
+                        case "nextweek":
+                        case "next week":
+                            Options.DueDate = DateTime.Now.AddDays(7).ToShortDateString();
+                            break;
+                        case "nextmonth":
+                        case "next month":
+                            Options.DueDate = DateTime.Now.AddDays(30).ToShortDateString();
+                            break;
+                        default:
+                            {
+                                var isDueDateDateTime = DateTime.TryParse(loweredDueDate, out _);
+                                if (!isDueDateDateTime)
+                                {
+                                    Options.DueDate = null;
+                                }
+                                break;
+                            }
+                    }
+                }
+            }
+
             // TODO Perform some input validation here, for required fields, etc.
             _todoTaskRepository.Add(new TodoTask()
             {
                 Title = Options.Title,
                 DueDateTime = Options.DueDate != null
                     ? DateTimeOffset.Parse(Options.DueDate, CultureInfo.CurrentCulture)
-                    : (DateTimeOffset?) null,
+                    : (DateTimeOffset?)null,
                 // CategoryId is a getter only hash value so we don't need to make a DB call to get it by the category name.
                 CategoryId = category.CategoryId,
                 Priority = Options.Priority,
