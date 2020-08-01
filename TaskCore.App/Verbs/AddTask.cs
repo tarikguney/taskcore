@@ -72,8 +72,14 @@ namespace TaskCore.App.Verbs
                             Options.DueDate = DateTime.Now.AddDays(30).ToShortDateString();
                             break;
                         default:
-                            Options.DueDate = null;
-                            break;
+                            {
+                                var isDueDateDateTime = DateTime.TryParse(loweredDueDate, out _);
+                                if (!isDueDateDateTime)
+                                {
+                                    Options.DueDate = null;
+                                }
+                                break;
+                            }
                     }
                 }
             }
