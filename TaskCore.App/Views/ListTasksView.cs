@@ -114,14 +114,6 @@ namespace TaskCore.App.Views
             {
                 FeedbackIfThereIsntTask("Active");
             }
-            if (_options.DuedateAscending)
-            {
-                activeTasks = activeTasks.OrderBy(x => x.DueDateTime).ToList();
-            }
-            else if (_options.DuedateDescending)
-            {
-                activeTasks = activeTasks.OrderByDescending(x => x.DueDateTime).ToList();
-            }
 
             for (var i = 0; i < activeTasks.Count; i++)
             {

@@ -13,10 +13,5 @@ namespace TaskCore.App.Options
         public string CategoryName { get; set; }
         [OptionName("priority", Alias = "p")]
         public int Priority { get; set; }
-
-        [OptionName("descendingduedate", Alias = "ddd", Description = "List by descending due date")]
-        public bool DuedateDescending { get; set; }
-        [OptionName("ascendingduedate", Alias = "asdd", Description = "List by ascending due date")]
-        public bool DuedateAscending { get; set; }
     }
 }
