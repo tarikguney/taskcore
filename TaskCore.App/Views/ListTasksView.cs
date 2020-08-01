@@ -23,7 +23,7 @@ namespace TaskCore.App.Views
             _options = options;
             _activeTasks = activeTasks;
             _completedTasks = completedTasks;
-            _categoriesDict = categories.ToDictionary(a => a.CategoryId, a => a.Name);
+            _categoriesDict = categories.ToDictionary(a => a.CategoryId, a => a.Name)!;
             _priorityColorChooser = priorityColorChooser;
         }
 
@@ -48,25 +48,28 @@ namespace TaskCore.App.Views
         }
 
 
-        private void FeedbackIfThereIsntTask(string renderedTaskName)
+        private void WarnForEmptyResult(bool isForCompletedTasks = false)
         {
+            var taskType = isForCompletedTasks ? "completed" : "active";
+            
+            ForegroundColor = ConsoleColor.Red;
             if (!string.IsNullOrWhiteSpace(_options.CategoryName) && _options.Priority != 0)
             {
-                Write("There's no {0} task with the Priority ID: {1} and the Category name: {2}", renderedTaskName, _options.Priority, _options.CategoryName);
+                Write("There is no {0} task with the priority {1} and the Category name: {2}", taskType, _options.Priority, _options.CategoryName);
             }
             else if (_options.Priority != 0)
             {
-                Write("There's no {0} task with the Priority ID: {1}", renderedTaskName, _options.Priority);
+                Write("There is no {0} task with the priority {1}", taskType, _options.Priority);
             }
             else if (!string.IsNullOrWhiteSpace(_options.CategoryName))
             {
-                Write("There's no {0} task with the Category name: {1}", renderedTaskName, _options.CategoryName);
+                Write("There is no {0} task with the Category name: {1}", taskType, _options.CategoryName);
             }
             else
             {
-                Write("There's no {0} task", renderedTaskName);
+                Write("There's no {0} task", taskType);
             }
-            return;
+            ResetColor();;
         }
 
         private void RenderCompletedTasks()
@@ -81,9 +84,9 @@ namespace TaskCore.App.Views
             {
                 completedTask = completedTask.Where(x => x.Priority == _options.Priority).ToList();
             }
-            if (completedTask.Count() == 0)
+            if (!completedTask.Any())
             {
-                FeedbackIfThereIsntTask("Completed");
+                WarnForEmptyResult(true);
             }
 
             foreach (var task in completedTask)
@@ -110,9 +113,9 @@ namespace TaskCore.App.Views
             {
                 activeTasks = activeTasks.Where(x => x.Priority == _options.Priority).ToList();
             }
-            if (activeTasks.Count() == 0)
+            if (!activeTasks.Any())
             {
-                FeedbackIfThereIsntTask("Active");
+                WarnForEmptyResult();
             }
 
             for (var i = 0; i < activeTasks.Count; i++)
