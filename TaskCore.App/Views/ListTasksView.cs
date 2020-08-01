@@ -106,7 +106,8 @@ namespace TaskCore.App.Views
                 Write($"in {_categoriesDict[task.CategoryId]}");
                 if (_options.Verbose)
                 {
-                    Write($" - {task.CreationDate:F}.");
+                    Write($" - Created on {task.CreationDate:F}.");
+                    Write($" - Due Date on {task.DueDateTime:F}");
                 }
 
                 WriteLine();
