@@ -47,33 +47,33 @@ namespace TaskCore.App.Verbs
             {
                 string loweredDueDate = Options.DueDate.ToLower();
 
-                var isDueDateNumeric = double.TryParse(loweredDueDate, out _);
+                var isDueDateNumeric = int.TryParse(loweredDueDate, out _);
 
                 if (isDueDateNumeric)
                 {
-                    Options.DueDate = DateTime.Now.AddDays(double.Parse(loweredDueDate)).ToShortDateString();
+                    Options.DueDate = DateTime.Now.AddDays(int.Parse(loweredDueDate)).ToShortDateString();
                 }
                 else
                 {
-                    if (loweredDueDate == "today")
+                    switch (loweredDueDate)
                     {
-                        Options.DueDate = DateTime.Now.ToShortDateString();
-                    }
-                    else if (loweredDueDate == "tomorrow")
-                    {
-                        Options.DueDate = DateTime.Now.AddDays(1).ToShortDateString();
-                    }
-                    else if (loweredDueDate == "nextweek")
-                    {
-                        Options.DueDate = DateTime.Now.AddDays(7).ToShortDateString();
-                    }
-                    else if (loweredDueDate == "nextmonth")
-                    {
-                        Options.DueDate = DateTime.Now.AddDays(30).ToShortDateString();
-                    }
-                    else
-                    {
-                        Options.DueDate = null;
+                        case "today":
+                            Options.DueDate = DateTime.Now.ToShortDateString();
+                            break;
+                        case "tomorrow":
+                            Options.DueDate = DateTime.Now.AddDays(1).ToShortDateString();
+                            break;
+                        case "nextweek":
+                        case "next week":
+                            Options.DueDate = DateTime.Now.AddDays(7).ToShortDateString();
+                            break;
+                        case "nextmonth":
+                        case "next month":
+                            Options.DueDate = DateTime.Now.AddDays(30).ToShortDateString();
+                            break;
+                        default:
+                            Options.DueDate = null;
+                            break;
                     }
                 }
             }
