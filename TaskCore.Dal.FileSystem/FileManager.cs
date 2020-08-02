@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -27,17 +28,37 @@ namespace TaskCore.Dal.FileSystem
             _categoriesDir = new DirectoryInfo(Path.Combine(dbPath, "categories"));
         }
 
-        static string GetDbPath()
+        public string GetDbPath()
         {
             string dbPath = Environment.GetEnvironmentVariable("TASKCORE_DB_PATH") ?? string.Empty;
             return string.IsNullOrWhiteSpace(dbPath)
                 ? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "taskcore")
                 : dbPath;
         }
-        
+
+        public void OpenDbFolder()
+        {
+            try
+            {
+                Process.Start("explorer.exe", GetDbPath());
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Database folder opened.");
+                Console.ResetColor();
+            }
+            catch (Exception)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Could not open your local dbpath");
+                Console.ResetColor();
+            }
+        }
+
         public void RemoveDbFolder()
         {
             Directory.Delete(GetDbPath(), true);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Database folder removed.");
+            Console.ResetColor();
         }
 
         public void SaveActiveTask(string fileName, string content)
