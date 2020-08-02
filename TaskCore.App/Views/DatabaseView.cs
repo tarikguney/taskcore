@@ -18,7 +18,7 @@ namespace TaskCore.App.Views
 
         public override void RenderResponse()
         {
-            if (_options.Write)
+            if (_options.Show)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"Local database folder path: \"{_dbRepository.GetPath()}\"");

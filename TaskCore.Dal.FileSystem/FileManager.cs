@@ -40,7 +40,19 @@ namespace TaskCore.Dal.FileSystem
         {
             try
             {
-                Process.Start("explorer.exe", GetDbPath());
+                if (GetDbPath().Contains("AppData")) // windows
+                {
+                    Process.Start("explorer", GetDbPath());
+                }
+                else if(false) // mac
+                {
+
+                }
+                else //unix, linux systems which are using 'nautilus' file manager
+                {
+                    Process.Start("nautilus", GetDbPath());
+                }
+
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Database folder opened.");
                 Console.ResetColor();
@@ -48,7 +60,7 @@ namespace TaskCore.Dal.FileSystem
             catch (Exception)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Could not open your local dbpath");
+                Console.WriteLine($"Could not open your local db folder, you could use 'database -s' command to see your database path");
                 Console.ResetColor();
             }
         }

@@ -5,17 +5,13 @@ namespace TaskCore.App.Options
 {
     public class DatabaseOptions : VerbOptionsBase
     {
-        [OptionName("write", Alias = "w", Description = "Writes your local database path in console")]
-        public bool Write { get; set; }
-
-        [OptionName("open", Alias = "o", Description = "Opens your local database folders with your file manager system")]
+        [OptionName("show", Alias = "s", Description = "Shows your local database path in console.")]
+        public bool Show { get; set; }
+        [OptionName("open", Alias = "o", Description = "Opens your local database folders with your file manager system.")]
         public bool Open { get; set; }
-
-        [OptionName("clear", Alias = "c", Description = "Removes your local database folders. You must use --force for it.")]
+        [OptionName("clear", Alias = "c", Description = "Clears your local database items. You have to use --force with it.")]
         public bool Clear { get; set; }
-
         [OptionName("force")]
         public bool Force { get; set; }
-
     }
 }
