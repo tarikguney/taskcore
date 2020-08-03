@@ -9,7 +9,7 @@ namespace TaskCore.App.Options
         public bool Show { get; set; }
         [OptionName("open", Alias = "o", Description = "Opens your local database folders with your file manager system.")]
         public bool Open { get; set; }
-        [OptionName("clear", Alias = "c", Description = "Clears your local database items. You have to use --force with it.")]
+        [OptionName("clear", Alias = "c", Description = "Removes your local database items. You have to use --force with it.")]
         public bool Clear { get; set; }
         [OptionName("force")]
         public bool Force { get; set; }

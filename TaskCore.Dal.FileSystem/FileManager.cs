@@ -52,15 +52,11 @@ namespace TaskCore.Dal.FileSystem
                 {
                     Process.Start("nautilus", GetDbPath());
                 }
-
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Database folder opened.");
-                Console.ResetColor();
             }
             catch (Exception)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Could not open your local db folder, you could use 'database -s' command to see your database path");
+                Console.WriteLine($"Could not reach your file manager to open database folder, you could use 'database -s' command to see your database path");
                 Console.ResetColor();
             }
         }
@@ -68,9 +64,6 @@ namespace TaskCore.Dal.FileSystem
         public void RemoveDbFolder()
         {
             Directory.Delete(GetDbPath(), true);
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Database folder removed.");
-            Console.ResetColor();
         }
 
         public void SaveActiveTask(string fileName, string content)

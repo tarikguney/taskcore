@@ -16,12 +16,18 @@ namespace TaskCore.App.Verbs
         }
         public override VerbViewBase Run()
         {
-            if (Options.Open)
+            if (Options.Clear && (Options.Show || Options.Open))
             {
-                _dbRepository.Open();
+                return new DatabaseMultiCommandUsageErrorView();
             }
-
-            return new DatabaseView(Options, _dbRepository);
+            else if(Options.Clear && !Options.Force)
+            {
+                return new DatabaseClearForceErrorView();
+            }
+            else
+            {
+                return new DatabaseView(Options, _dbRepository);
+            }
         }
     }
 }

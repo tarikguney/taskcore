@@ -9,7 +9,6 @@ namespace TaskCore.App.Views
     {
         private readonly DatabaseOptions _options;
         private readonly IDbRepository _dbRepository;
-
         public DatabaseView(DatabaseOptions options, IDbRepository dbRepository)
         {
             _options = options;
@@ -18,25 +17,23 @@ namespace TaskCore.App.Views
 
         public override void RenderResponse()
         {
+            if (_options.Clear)
+            {
+                _dbRepository.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Database folder removed.");
+                Console.ResetColor();
+                return;
+            }
+            if (_options.Open)
+            {
+                _dbRepository.Open();
+            }
             if (_options.Show)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Local database folder path: \"{_dbRepository.GetPath()}\"");
+                Console.WriteLine($"Your local database path: \"{_dbRepository.GetPath()}\"");
                 Console.ResetColor();
-            }
-            if (_options.Clear)
-            {
-                if (_options.Force)
-                {
-                    _dbRepository.Clear();
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("If you're sure you want to delete the database folder, rerun this command with --force.");
-                    Console.ResetColor();
-                    Environment.ExitCode = 105;
-                }
             }
         }
     }
