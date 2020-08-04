@@ -43,13 +43,14 @@ namespace TaskCore.Dal.FileSystem
 
         public void OpenDbPath()
         {
+            string dbPath = GetDbPath();
             try
             {
-                if (GetDbPath().Contains("AppData"))                    // windows
+                if (dbPath.Contains("AppData"))                         // windows
                 {
                     Process.Start("explorer", GetDbPath());
                 }
-                else if (GetDbPath().Contains("Application Support"))   // mac
+                else if (dbPath.Contains("Library"))                    // mac
                 {
                     Process.Start("open", GetDbPath());
                 }
