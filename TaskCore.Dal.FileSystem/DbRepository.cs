@@ -15,5 +15,13 @@ namespace TaskCore.Dal.FileSystem
         {
             _fileManager.RemoveDbFolder();    
         }
+        public void Open()
+        {
+            _fileManager.OpenDbPath();
+        }
+        public string Show()
+        {
+           return _fileManager.ShowDbPath();
+        }
     }
 }

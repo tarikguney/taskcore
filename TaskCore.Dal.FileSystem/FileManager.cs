@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -35,6 +36,35 @@ namespace TaskCore.Dal.FileSystem
                 : dbPath;
         }
         
+        public string ShowDbPath()
+        {
+            return GetDbPath();
+        }
+
+        public void OpenDbPath()
+        {
+            try
+            {
+                if (GetDbPath().Contains("AppData"))                    // windows
+                {
+                    Process.Start("explorer", GetDbPath());
+                }
+                else if (GetDbPath().Contains("Application Support"))   // mac
+                {
+                    Process.Start("open", GetDbPath());
+                }
+                else                                                    //unix, linux systems which are using 'nautilus' file manager
+                {
+                    Process.Start("nautilus", GetDbPath());
+                }
+            }
+            catch (Exception)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Sorry, TaskCore could not reach your file manager, you could use \"show\" command to see your database path");
+                Console.ResetColor();
+            }
+        }
         public void RemoveDbFolder()
         {
             Directory.Delete(GetDbPath(), true);
