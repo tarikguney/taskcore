@@ -8,8 +8,6 @@ This application works almost on any platform which includes Linux Distros, MacO
 
 "Task" simply represents what this application is helping people with. "Core" represents its simplicity and how it works on a terminal environment.
 
-I am developing this application during COVID-19 pandemic, and it is also a sort of a mental escape into a known and controlled world where I know what will happen next. It feels good that way.
-
 ## Why?
 
 Why not? Not everyone likes fancy GUIs or works in X Window environments or prefer leaving their simple looking terminal environment. This application is not for everyone. You should have a special taste for the command line environments. 
