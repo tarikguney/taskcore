@@ -1,18 +1,44 @@
-## What is TaskCore?
+<img src="./assests/banner.png">
+
+Table of Contents
+=================
+<!--ts-->
+   * [What is TaskCore?](#what-is-taskcore)
+      * [Why did you name it TaskCore?](#why-did-you-name-it-taskcore)
+   * [Why?](#why)
+   * [Demo](#demo)
+      * [How to contribute?](#how-to-contribute)
+   * [How it works?](#how-it-works)
+      * [Managing Tasks](#managing-tasks)
+      * [Managing Categories](#managing-categories)
+      * [Clear Database](#clear-database)
+      * [Configuration](#configuration)
+   * [CommandCore Framework](#commandcore-framework)
+   * [Installation](#installation)
+   * [Want to build locally?](#want-to-build-locally)
+      * [Linux](#linux)
+      * [Windows 10](#windows-10)
+      * [MacOS](#macos)
+
+<!-- Added by: tarikguney, at: Tue Dec 29 17:21:27 MST 2020 -->
+
+<!--te-->
+
+# What is TaskCore?
 
 It is a simple **cross-platform ToDo management application** for those who live inside a terminal where you don't have a fancy GUI. 
 
 This application works almost on any platform which includes Linux Distros, MacOS, and Windows. It does not require any runtime to be installed on the target machine, and it is only one single executable that can be copied anywhere.
 
-### Why did you name it TaskCore?
+## Why did you name it TaskCore?
 
 "Task" simply represents what this application is helping people with. "Core" represents its simplicity and how it works on a terminal environment.
 
-## Why?
+# Why?
 
 Why not? Not everyone likes fancy GUIs or works in X Window environments or prefer leaving their simple looking terminal environment. This application is not for everyone. You should have a special taste for the command line environments. 
 
-## Demo
+# Demo
 
 ![Demo](./taskcore_demo.gif)
 
@@ -20,9 +46,9 @@ Why not? Not everyone likes fancy GUIs or works in X Window environments or pref
 
 I am adding the new features I am planning to add here: https://github.com/tarikguney/taskcore/projects/1. You can grab one of the not active one, and let me know if you are working on them. You can also be a beta tester and create issues here if you see any problem: https://github.com/tarikguney/taskcore/issues. Thanks for considering to contribute to the project.
 
-## How it works?
+# How it works?
 
-### Managing Tasks
+## Managing Tasks
 
 Add a new task item with priority 1 (highest) and due date:
 ```bash
@@ -55,7 +81,7 @@ Remove a task item - Passing multiple Ids is allowed:
 taskcore rm -i 3 2 3
 ```
 
-### Managing Categories
+## Managing Categories
 
 Add a new category:
 
@@ -73,7 +99,7 @@ Remove a category:
 taskcore rmc -n "Work"
 ```
 
-### Clear Database
+## Clear Database
 
 Delete the database folder, `--force` is required:
 
@@ -81,7 +107,7 @@ Delete the database folder, `--force` is required:
 taskcore clear --force
 ```
 
-### Configuration
+## Configuration
 
 TaskCore supports the following environment variables:
 
@@ -96,11 +122,11 @@ TaskCore supports the following environment variables:
   </tr>
 </table>
 
-## CommandCore Framework
+# CommandCore Framework
 
 This application is using another project I developed named "CommandCore" as its underlying framework for command parsing and project layout management. CommandCore is an opinionated MVC-based framework for command line application development. You can find more information at [CommandCore Github Page](https://www.github.com/tarikguney/command-core).
 
-## Installation
+# Installation
 
 You can download an executable for your system: [here](https://github.com/tarikguney/taskcore/releases)
 
@@ -118,27 +144,24 @@ Alternatively, taskcore is available in the following package managers:
   </tr>
 </table>
 
-## Want to build locally?
+# Want to build locally?
 
 Run the folowing command for the desired operating system. The final executable will be self-contained and single executable file. You don't need to have .NET Core runtime in the target computer where you are planning to run the published binary.
 
-#### Linux
+## Linux
 ```
 dotnet publish -c Release --self-contained true --runtime linux-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true ./TaskCore.App.csproj
 ```
 
-#### Windows 10
+## Windows 10
 ```
 dotnet publish -c Release --self-contained true --runtime win10-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true .\TaskCore.App.csproj
 ```
 
-#### MacOS
+## MacOS
 ```
 dotnet publish -c Release --self-contained true --runtime osx-x64 -p:PublishSingleFile=true -p:PublishTrimmed=true ./TaskCore.App.csproj
 ```
 
 Then, go to `in/Release/netcoreapp3.1/osx-x64/publish` to locate outputted executable named `taskcore` and run the `taskcore` using the subcommands above.
 
-## Developed by
-
-Tarik Guney
