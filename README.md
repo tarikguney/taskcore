@@ -26,7 +26,7 @@ Table of Contents
 
 # What is TaskCore?
 
-It is a simple **cross-platform ToDo management application** for those who live inside a terminal where you don't have a fancy GUI. 
+It is a simple **cross-platform ToDo management application** for those who live inside terminals. 
 
 This application works almost on any platform which includes Linux Distros, MacOS, and Windows. It does not require any runtime to be installed on the target machine, and it is only one single executable that can be copied anywhere.
 
